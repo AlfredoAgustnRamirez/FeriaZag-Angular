@@ -1,0 +1,46 @@
+.imput{
+    width: 70%;
+}
+
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+    background-color: rgb(201, 167, 196);
+  }
+
+  .table-container {
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    max-width: 100%; /* Limita el ancho máximo al contenedor */
+  }
+  
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+  }
+
+  .responsive-table th, .responsive-table td {
+    border: 1px solid #ddd; /* Añade bordes a las celdas */
+    padding: 10px;
+    background-color: rgb(233, 204, 220);
+  }
+  
+  /* Media query para ajustar el tamaño de las celdas en dispositivos pequeños */
+  @media (max-width: 600px) {
+    .responsive-table th, .responsive-table td {
+      padding: 10px;
+      font-size: 10px;
+    }
+  }
+
+  .botones-container {
+    display: flex; /* Usa flexbox para alinear los botones */
+    justify-content: center; /* Centra los elementos horizontalmente */
+  }
+
+  .listusuarios{
+    color: rgb(168, 87, 137);
+  }
+
+  .boton {
+    margin: 0 10px; /* Añade un espacio entre los botones */
+  }

@@ -1,0 +1,129 @@
+.container {
+  /* Estilos para el contenedor */
+  border: 1px solid rgb(241, 210, 243); /* Ejemplo de borde rojo */
+  background-color: rgb(212, 178, 194);
+}
+
+.header{
+  color: rgb(245, 138, 231);
+}
+
+.contenedor-flexbox {
+  display:flex ;
+}
+
+.contenedor-filas {
+  display: grid;
+  grid-template-rows: 1fr 1fr; /* Dos filas de igual altura */
+}
+
+.buscar{
+  color: rgb(245, 138, 231);
+}
+
+.fila-arriba {
+  padding: 10px;
+}
+
+.columna {
+  flex: 1; /* Las columnas ocupan igual espacio */
+  padding: 5px;
+  margin-right: 10px; /* Espacio entre las columnas */
+}
+
+/* Eliminar el margen derecho de la última columna */
+.columna:last-child {
+  margin-right: 0;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .columna {
+    flex-basis: calc(50% - 10px); /* Ancho del 50% menos el margen */
+  }
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .container {
+    flex-basis: calc(50% - 10px); /* Ancho del 50% menos el margen */
+  }
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .contenedor-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Cambiar tamaño de las columnas */
+  }
+}
+
+.contenedor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsive */
+  gap: 10px;
+}
+
+.contenedor-inputs {
+  display: flex;
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container::before {
+  content: attr(data-label); /* Utiliza el atributo data-label para el nombre */
+  font-weight: bold;
+  margin-bottom: 5px; /* Espacio entre el nombre y el input */
+}
+
+.input {
+  flex: 1; /* Los inputs ocupan el mismo espacio */
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .input-container {
+    flex-basis: calc(50% - 5px); /* Ancho del 50% menos el espacio entre elementos */
+  }
+}
+
+.table-container {
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  max-width: 100%; /* Limita el ancho máximo al contenedor */
+}
+
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse; /* Combina los bordes de las celdas */
+}
+
+.responsive-table th, .responsive-table td {
+  border: 1px solid #ddd; /* Añade bordes a las celdas */
+  padding: 10px;
+  background-color: rgb(233, 204, 220);
+}
+
+/* Media query para ajustar el tamaño de las celdas en dispositivos pequeños */
+@media (max-width: 600px) {
+  .responsive-table th, .responsive-table td {
+    padding: 10px;
+    font-size: 10px;
+  }
+}
+
+.button{
+  margin-top: 5px;
+  background-color: rgb(223, 149, 180);
+}
+
+@media (max-width: 468px) {
+  .button {
+    flex-basis: calc(30% - 5px); /* Ancho del 50% menos el espacio entre elementos */
+  }
+}

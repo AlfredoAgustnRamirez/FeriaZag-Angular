@@ -1,0 +1,29 @@
+<div class="flex w-screen h-screen justify-content-center align-items-center">
+    <div class="border-round-md bg-white p-5">
+      <h1 class="text-center">Bienvenido</h1>
+    <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+        <input type="text" nz-input placeholder="Ingrese su Correo" [(ngModel)]="email"/>
+      </nz-input-group>
+      <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+      <ng-template #suffixTemplateInfo>
+        <span nz-icon nz-tooltip nzTooltipTitle="Ingresa un correo" nzType="info-circle"></span>
+      </ng-template>
+
+      <nz-input-group class="mt-3" [nzSuffix]="suffixTemplate">
+        <input
+          [type]="passwordVisible ? 'text' : 'password'"
+          nz-input
+          placeholder="Contraseña"
+          [(ngModel)]="password"
+        />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <span
+          nz-icon
+          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+          (click)="passwordVisible = !passwordVisible"
+        ></span>
+      </ng-template>
+        <button (click)="login()" class="w-full mt-3" nz-button nzType="primary">Ingresar</button>
+    </div>
+</div>

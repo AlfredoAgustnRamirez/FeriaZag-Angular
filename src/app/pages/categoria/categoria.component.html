@@ -1,0 +1,61 @@
+<h1 class="listcategoria text-center">Listado de categorias</h1>
+
+<div class="flex justify-content-between p-5">
+    <div class="input">
+        <input (keyup)="search()" nz-input placeholder="Buscar por nombre" [(ngModel)]="value" type="text" />
+    </div>
+    <button (click)="openModal()" nz-button nzType="primary">Agregar</button>
+</div>
+
+<div class="table-container">
+    <nz-table class="responsive-table" #basicTable [nzData]="listOfData">
+        <thead>
+          <tr>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Activo</th>
+            <th class="text-center">Editar</th>
+            <th class="text-center">Desactivar</th>
+            <th class="text-center">Activar</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of basicTable.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.nombre }}</td>
+                  <td class="text-center">{{ data.activo }}</td>
+                <td>
+                    <button (click)="edit(data)" nz-button nzType="primary"> 
+                        <span  nz-icon nzType="drop"></span>
+                        Editar
+                    </button>
+                </td>
+                <td>
+                <button nz-popconfirm
+                    nzPopconfirmTitle="Estas seguro que desea desactivar la categoria?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="desactivarCategoria(data.idcategoria || '')"
+                     nz-button nzType="primary">
+                        desactivar
+                    </button>
+                </td>
+                <td>
+                    <button nz-popconfirm
+                    nzPopconfirmTitle="Estas seguro que desea activar la categoria?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="activarCategoria(data.idcategoria || '')"
+                     nz-button nzType="primary">
+                        activar
+                    </button>
+                </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idcategoria?'Editar categoria':'Agregar categoria'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <input class="mt-3" nz-input placeholder="nombre" [(ngModel)]="form.nombre" type="text" />
+        <input class="mt-3" nz-input placeholder="Activo" [(ngModel)]="form.activo" type="text" />
+    </ng-container>
+</nz-modal>
