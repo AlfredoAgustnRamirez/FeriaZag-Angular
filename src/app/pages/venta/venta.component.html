@@ -1,3 +1,4 @@
+
 <div class="container">
     <h1 class="header text-center">Nueva Venta</h1>
     <div class="container">
@@ -5,20 +6,21 @@
         <div class="contenedor-flexbox">
             
             <div class="columna">
-                <input class="input" type="text" (input)="onSearchInput($event)" placeholder="Buscar...">
-                <ul>
-                    @for(data of searchResults; track $index){
-                        <li>{{ data }}</li>
-                    }
-                </ul>            
-            </div>
-            
+                <input class="input" type="text" [(ngModel)]="value" (input)="search()" placeholder="Buscar por descripcion del producto">
+                @if(value && venta.length > 0){
+                    <ul class="dropdown">
+                        @for(data of venta; track $index){
+                            <li>{{ data.descripcion }}</li>
+                        }
+                    </ul>  
+                }            
+            </div>     
             <div class="columna">
                 <button class="button" nz-button nzType="primary">Agregar</button>
             </div>
     </div>
     <div class="table-container">
-        <nz-table class="responsive-table" #basicTable [nzData]="listOfData">
+        <nz-table class="responsive-table" #basicTable [nzData]="venta">
             <thead>
               <tr>
                 <th class="text-center">Codigo</th>

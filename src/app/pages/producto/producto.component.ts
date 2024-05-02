@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-contacts',
+  selector: 'app-producto',
   standalone: true,
   imports: [
     NzInputModule,

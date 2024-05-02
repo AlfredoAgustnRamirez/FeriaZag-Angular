@@ -81,7 +81,8 @@
 
 .input {
   flex: 1; /* Los inputs ocupan el mismo espacio */
-  padding: 10px;
+  padding: 12px;
+  width: 70%;
   border: 1px solid #ccc;
 }
 
@@ -126,4 +127,24 @@
   .button {
     flex-basis: calc(30% - 5px); /* Ancho del 50% menos el espacio entre elementos */
   }
+}
+
+.dropdown {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  list-style-type: none;
+  margin: 0;
+  z-index: 1000;
+  width: 26%;
+}
+
+.dropdown li {
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background-color: #f0f0f0;
 }
