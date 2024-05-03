@@ -26,9 +26,26 @@
 .input {
   flex: 1; /* Los inputs ocupan el mismo espacio */
   padding: 12px;
-  width: 34%;
-  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #d682b1;
   margin-left: auto;
+  color: #cf77a0;
+  background-color: #e2aed9;
+}
+
+.total{
+  width: 18%;
+  display: flex;
+  margin-left: 55%;
+  margin-top: 20px;
+  height: 30px;
+}
+
+.ptotal{
+  color: #b87795;
+  margin-right: 5%;
+  font-size: 22px;
 }
 
 .nz-button {
@@ -103,5 +120,23 @@
 @media (max-width: 768px) {
   .input-container {
     flex-basis: calc(50% - 5px); /* Ancho del 50% menos el espacio entre elementos */
+  }
+}
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .input-container {
+      margin: 10px;
+  }
+  input {
+    padding: 8px;
+    border-radius: 3px;
+  }
+}
+
+/* Media query para pantallas aún más pequeñas */
+@media screen and (max-width: 480px) {
+  input {
+      padding: 26px;
   }
 }

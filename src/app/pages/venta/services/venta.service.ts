@@ -19,4 +19,8 @@ export class VentaService {
     return this.http.get<IVenta[]>(`${ENDPOINTS.api}venta/listar`)
   }
 
+  getUserId(): Observable<IVenta[]>{
+    return this.http.get<IVenta[]>(`${ENDPOINTS.api}venta/iduser`)
+  }
+
 }

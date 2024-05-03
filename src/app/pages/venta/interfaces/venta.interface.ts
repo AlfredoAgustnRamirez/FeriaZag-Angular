@@ -1,5 +1,6 @@
 export interface IVenta{
-   id?: string 
+   iduser?: string 
+   idcabecera?: string
    idproducto?: string
    codconsignacion?: string
    codproducto?: string

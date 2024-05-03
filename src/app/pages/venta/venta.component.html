@@ -29,7 +29,7 @@
             <tbody class="align-item-center">
                 @for (data of productosAgregados; track $index) {
                     <tr>
-                      <td class="text-center">{{ data.codconsignacion }}</td>
+                      <td class="text-center">{{ data.codproducto }}</td>
                       <td class="text-center">{{ data.descripcion }}</td>
                       <td class="text-center">{{ data.precio }}</td>
                     <td>
@@ -45,5 +45,12 @@
             </tbody>
         </nz-table>
     </div>
+</div>
+
+<p>usuario {{iduser }}</p>
+  
+<div class="total">
+    <p class="ptotal">Total: </p>
+    <input class="input" type="text" [value]="totalVenta" readonly>
 </div>
 

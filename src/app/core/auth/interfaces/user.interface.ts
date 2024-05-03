@@ -4,7 +4,7 @@ export interface Session{
 }
 
 export interface User{
-    id: string
+    iduser: string
     password: string
     email: string
 }

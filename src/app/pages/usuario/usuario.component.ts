@@ -50,7 +50,6 @@ export class UsuarioComponent {
 
   ngOnInit(){
     this.initForm()
-    this.getUsuario()
   }
 
   initForm(){
