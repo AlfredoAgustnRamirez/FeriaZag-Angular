@@ -42,6 +42,7 @@ import { CommonModule } from '@angular/common';
 export class VentaComponent {
   venta: IVenta[] = []
   ventaTmp: IVenta[] = []
+  productosAgregados: IVenta[] = [];
   isVisible: boolean = false
   value: string = ''
   descripcion: string = ''
@@ -74,6 +75,15 @@ export class VentaComponent {
     this.venta = producto
     this.ventaTmp = producto
  })
+}
+
+agregarProducto(producto: IVenta): void {
+  this.productosAgregados.push(producto);
+}
+
+ // Método para eliminar un producto de la venta
+ eliminarProducto(idproducto: string): void {
+    this.productosAgregados = this.productosAgregados.filter(producto => producto.idproducto !== idproducto);
 }
 
 search(){

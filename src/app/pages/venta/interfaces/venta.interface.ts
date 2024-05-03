@@ -6,5 +6,6 @@ export interface IVenta{
    idconsignacion?: string
    categoria?: string
    idcategoria?: string
+   precio?: string
    descripcion: string
 }
