@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { RotateRightOutline } from '@ant-design/icons-angular/icons';
 import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -30,4 +29,5 @@ export class MainComponent {
     localStorage.removeItem(SESSION.localStorage)
     this.router.navigate(['/'])
   }
+  
 }

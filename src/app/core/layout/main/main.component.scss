@@ -82,12 +82,12 @@
   }
   
   .link {
-    margin-right: auto;
     font-size: 14px; /* Tamaño de la fuente */
     height: 20px; /* Altura del botón */
-    margin-left: 900px;
     color: rgb(231, 99, 161);
     border-radius: 5px;
+    float: right;
+    margin-right: 20px;
   }
 
   @media only screen and (max-width: 600px) {
