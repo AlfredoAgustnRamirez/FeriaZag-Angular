@@ -7,17 +7,31 @@
           <input
             class="input"
             type="text"
-            [(ngModel)]="value"
-            (input)="search()"
+            [(ngModel)]="valorinput1"
+            (input)="searchPorDescripcion()"
             placeholder="Buscar por descripcion del producto"
           />
-          @if(value && venta.length > 0){
-          <ul class="dropdown">
-            @for(data of venta; track $index){
-            <li (click)="agregarProducto(data)">{{ data.descripcion }}</li>
+          @if(valorinput1 && venta.length > 0){
+            <ul class="dropdown">
+              @for(data of venta; track $index){
+              <li (click)="agregarProducto(data)">{{ data.descripcion }}</li>
+              }
+            </ul>
             }
-          </ul>
-          }
+            <input
+            class="input-codigo m-4"
+            type="text"
+            [(ngModel)]="valorinput2"
+            (input)="searchPorCodigo()"
+            placeholder="Buscar por codigo del producto"
+          />
+          @if(valorinput2 && venta.length > 0){
+            <ul class="dropdown-codigo">
+              @for(data of venta; track $index){
+              <li (click)="agregarProducto(data)">{{ data.codproducto }}</li>
+              }
+            </ul>
+            }
         </div>
       </div>
       <div class="table-container mt-3">
@@ -60,9 +74,6 @@
         </nz-table>
       </div>
     </div>
-
-    <p>usuario {{ iduser }}</p>
-
     <div class="total">
       <p class="ptotal">Total:</p>
       <input class="input" type="text" [value]="totalVenta" readonly />
