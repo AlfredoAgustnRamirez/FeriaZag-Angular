@@ -9,6 +9,7 @@ import { ENDPOINTS } from '../../../share/constants/endpoints.constant';
   providedIn: 'root'
 })
 export class AuthService {
+  private userId: string = ''
 
   constructor(
     private http: HttpClient
@@ -16,6 +17,14 @@ export class AuthService {
 
   login(payload: UserPayload): Observable<User>{
     return this.http.post<User>(`${ENDPOINTS.api}user/login`, payload)
+  }
+
+  setUserId(userId: string): void {
+    this.userId = userId;
+  }
+
+  getUserId(): string | null {
+    return this.userId;
   }
 
 }

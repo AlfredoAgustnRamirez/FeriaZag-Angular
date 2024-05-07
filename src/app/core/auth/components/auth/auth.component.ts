@@ -8,6 +8,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { SESSION } from '../../../../share/constants/session.constant';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Session, User, UserPayload } from '../../interfaces/user.interface';
+import { id_ID } from 'ng-zorro-antd/i18n';
 
 
 
@@ -28,6 +30,8 @@ export class AuthComponent {
   passwordVisible = false
   email: string = ''
   password: string = ''
+  userId: string  = ''
+  nombre: string = ''
 
   constructor(
     private AuthService: AuthService,
@@ -35,26 +39,31 @@ export class AuthComponent {
     private message: NzMessageService,
   ){ }
 
-  login(): void{
+  login(){
     const payload = {
       email: this.email,
       password: this.password
     } 
     
-    this.AuthService.login(payload).subscribe(
-      (session) => {
-        localStorage.setItem('SESSION.localStorage', JSON.stringify(session));
-        this.router.navigate(['/welcome']);
-      },
-      (error) => {
-        if (error.status === 401) {
-          this.message.error('Correo o contraseña incorrectos. Por favor, inténtelo de nuevo.');
-        } else {
-          this.message.error('Error al iniciar sesión. Por favor, inténtelo de nuevo.');
-          console.error('Error en la autenticación:', error);
-        }
-      }
-    );
+    this.AuthService.login(payload).subscribe((session => {
+       // Verifica la estructura de la respuesta
+       console.log('Respuesta del servicio:', session);
+
+       // Verifica si session.iduser está presente y no es undefined
+       if (session) {
+         localStorage.setItem('SESSION.localStorage', JSON.stringify(session));
+         console.log('Id user: ', session.userId);
+         this.router.navigate(['/welcome']);
+       } else {
+         console.error('El ID de usuario no está definido en la sesión.');
+         // Puedes agregar aquí cualquier lógica adicional para manejar este caso
+       }
+     }),
+     (error) => {
+       console.error('Error al iniciar sesión:', error);
+       // Puedes agregar aquí cualquier lógica adicional para manejar este error
+     }
+   );
   }
 }
 

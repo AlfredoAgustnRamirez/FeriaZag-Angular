@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -11,12 +12,13 @@ export class WelcomeComponent implements OnInit {
   horaActual: string = '';
   fechaActual: string = '';
 
-  constructor() {
+  constructor(private AuthService: AuthService) {
     this.mostrarFechaHora(); 
     setInterval(() => this.mostrarFechaHora(), 1000);
    }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   mostrarFechaHora() {
     const ahora = new Date();

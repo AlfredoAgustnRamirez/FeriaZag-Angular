@@ -13,6 +13,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProductoComponent } from '../producto/producto.component';
 import { AuthService } from '../../core/auth/services/auth.service';
+import { UsuarioService } from '../usuario/services/usuario.service';
+import { IUsuario } from '../usuario/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-venta',
@@ -37,6 +39,7 @@ export class VentaComponent {
   venta: IVenta[] = []
   ventaTmp: IVenta[] = []
   productosAgregados: IVenta[] = [];
+  listUsuario: IUsuario [] = []
   isVisible: boolean = false
   value: string = ''
   descripcion: string = ''
@@ -48,10 +51,11 @@ export class VentaComponent {
   codproducto: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
+  userId: string | null = null;
 
   constructor(
     private VentaService: VentaService,
-    private authService: AuthService,
+    private AuthService : AuthService,
     private message: NzMessageService,
     private NzModalService: NzModalService,
   ){ 
@@ -62,9 +66,11 @@ export class VentaComponent {
     ];
     // Inicializa venta con los datos originales al inicio
     this.venta = this.ventaTmp;
+    // Obtener el ID del usuario al inicializar el componente
   }
 
   ngOnInit(){
+    this.userId = this.AuthService.getUserId()    
     this.getProducto()
   }
 
@@ -79,6 +85,7 @@ agregarProducto(producto: IVenta): void {
   this.productosAgregados.push(producto);
   this.actualizarTotalVenta()
 }
+
 
 actualizarTotalVenta(): void {
   // Inicializar totalVenta como número

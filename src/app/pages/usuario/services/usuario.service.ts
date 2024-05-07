@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
+  private userId: string | null = null;
+
   constructor(
     private http: HttpClient
   ) { }
@@ -31,6 +33,14 @@ export class UsuarioService {
 
   updateUsuario(payload: IUsuario): Observable<IUsuario>{
     return this.http.put<IUsuario>(`${ENDPOINTS.api}user/update/${payload.iduser}`, payload)
+  }
+
+  setUserId(userId: string) {
+    this.userId = userId;
+  }
+
+  getUserId(): string | null {
+    return this.userId;
   }
 
 

@@ -7,7 +7,7 @@ export interface IProductocons{
     categoria?: string
     descripcion: string
     talle: string
-    nombre?: string
     precio: string
     activo: string
+    listCategoriaId?: string
 }

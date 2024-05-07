@@ -67,11 +67,15 @@
 </div>
 
 <nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idproducto?'Editar producto':'Agregar producto'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>  
-        <input class="mt-3" nz-input placeholder="Idcategoria" [(ngModel)]="form.idcategoria" type="select" />
+    <ng-container *nzModalContent> 
+        <nz-select nzPlaceHolder="Lista de categoria" class="w-full" [(ngModel)]="form.idcategoria">
+            @for(items of listCategoria; track $index){
+                <nz-option [nzValue]="items.idcategoria" [nzLabel]="items.nombre"></nz-option>
+            }
+        </nz-select> 
         <input class="mt-3" nz-input placeholder="Descripcion" [(ngModel)]="form.descripcion" type="text" />
         <input class="mt-3" nz-input placeholder="Talle" [(ngModel)]="form.talle" type="text" />
         <input class="mt-3" nz-input placeholder="Precio" [(ngModel)]="form.precio" type="text" />
         <input class="mt-3" nz-input placeholder="Activo" [(ngModel)]="form.activo" type="text" />
-    </ng-container>
+        </ng-container>
 </nz-modal>

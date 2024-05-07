@@ -6,4 +6,5 @@ export interface IUsuario{
     usuario: string
     password?: string
     activo: string
+    listId: string
 }

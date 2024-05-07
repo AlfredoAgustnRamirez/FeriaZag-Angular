@@ -7,6 +7,7 @@ export interface User{
     iduser: string
     password: string
     email: string
+    userId: string
 }
 
 

@@ -9,8 +9,10 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageService, NzMessageModule } from 'ng-zorro-antd/message';
 import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { CategoriaService } from '../categoria/services/categoria.service';
+import { ICategoria } from '../categoria/interfaces/categoria.interface';
 
 @Component({
   selector: 'app-productocons',
@@ -23,7 +25,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
     NzModalModule,
     RouterModule,
     NzPopconfirmModule,
-    NzMessageModule
+    NzMessageModule,
+    NzSelectModule
   ],
   templateUrl: './productocons.component.html',
   styleUrl: './productocons.component.scss'
@@ -33,6 +36,7 @@ export class ProductoconsComponent {
   value: string = ''
   productos: IProductocons[] = []
   productosTmp: IProductocons[] = []
+  listCategoria: ICategoria [] = []
   form!: IProductocons
   isVisible: boolean = false
   descripcion: string = ''
@@ -47,20 +51,21 @@ export class ProductoconsComponent {
   codproducto: string = ''
   title?: string = ''
   codigoConsignacion?: string = ''
+  opcionSeleccionada: string = 'si';
 
   constructor(
     private productoconsServices: ProductoconsService,
+    private listcategoriaService: CategoriaService,
     private message: NzMessageService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient
   ){}
 
   ngOnInit(){
     this.consignacionId = this.route.snapshot.paramMap.get('idconsignacion') || '';
     this.obtenerProductosPorConsignacion(this.consignacionId)
     this.initForm()
+    this.getCategoria()
    }
 
    initForm(){
@@ -71,6 +76,12 @@ export class ProductoconsComponent {
       precio: '',
       activo: ''
     }
+  }
+
+  getCategoria(){
+    this.listcategoriaService.getCategoria().subscribe(listCategoria => {
+      this.listCategoria = listCategoria
+    })
   }
 
   openModal(){

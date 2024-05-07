@@ -22,7 +22,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzModalModule,
     RouterModule,
     NzPopconfirmModule,
-    NzMessageModule
+    NzMessageModule,
   ],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.scss'
@@ -41,19 +41,23 @@ export class UsuarioComponent {
   usuario: string = ''
   iduser: string = ''
   password: string = ''
+  userId: string | null = null
 
   constructor(
     private UsuarioService: UsuarioService,
     private message: NzMessageService,
     
-  ){ }
+  ){}
 
   ngOnInit(){
+    this.getUsuario()
+    this.userId = this.UsuarioService.getUserId();
     this.initForm()
   }
 
   initForm(){
     this.form = {
+      listId: '',
       nombre: '',
       apellido: '',
       email: '',
