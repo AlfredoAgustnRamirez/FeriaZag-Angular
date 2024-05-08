@@ -34,6 +34,13 @@
   background-color: #e2aed9;
 }
 
+.input-venta {
+  flex: 1;
+  background-color: #e2aed9;
+  border: 1px solid #d682b1;
+  width: 100px;
+}
+
 .input-codigo {
   flex: 1; /* Los inputs ocupan el mismo espacio */
   padding: 12px;
@@ -48,14 +55,14 @@
 .total{
   width: 18%;
   display: flex;
-  margin-left: 55%;
+  margin-left: 45%;
   margin-top: 20px;
   height: 30px;
 }
 
 .ptotal{
   color: #b87795;
-  margin-right: 5%;
+  margin-right: 2px;
   font-size: 22px;
 }
 
@@ -131,6 +138,21 @@
 
 .dropdown-codigo li:hover {
   background-color: #ee99bd;
+}
+
+.button {
+  display: flex;
+  background-color: #ee99bd;
+  border: 1px solid #d682b1;
+  width: 100%;
+  margin-left: 4px;
+  color: #b15a8b;
+}
+
+@media screen and (max-width: 768px) {
+  button {
+    font-size: 3vw; /* Cambiar tamaño de fuente para pantallas más pequeñas */
+  }
 }
 
 /* Media query para pantallas más pequeñas */

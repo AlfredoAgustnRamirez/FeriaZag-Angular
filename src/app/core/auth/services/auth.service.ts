@@ -19,12 +19,12 @@ export class AuthService {
     return this.http.post<User>(`${ENDPOINTS.api}user/login`, payload)
   }
 
-  setUserId(userId: string): void {
-    this.userId = userId;
+  getUserId(): string {
+    return localStorage.getItem('userId') || '';
   }
 
-  getUserId(): string | null {
-    return this.userId;
+  getUserNombre(): string {
+    return localStorage.getItem('nombreUsr') || '';
   }
 
 }

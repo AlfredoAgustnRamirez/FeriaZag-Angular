@@ -8,7 +8,7 @@ import { ConsignacionService } from './services/consignacion.service';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -29,8 +29,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class ConsignacionComponent implements OnInit{
   value: string = ''
-  listOfData: IConsignacion[] = []
-  listOfDataTmp: IConsignacion[] = []
+  consignacion: IConsignacion[] = []
+  consignacionTmp: IConsignacion[] = []
   form!: IConsignacion
   isVisible: boolean = false
   idconsignacion: string = ''
@@ -46,12 +46,22 @@ export class ConsignacionComponent implements OnInit{
   observacion: string = ''
   activo: string = ''
   consignacionId: string = '' 
+  valorinput1: string = ''
+  valorinput2: string = ''
 
   constructor(
     private consignacionServices: ConsignacionService,
     private message: NzMessageService,
-    private router: Router,
-  ){ }
+  ){
+    // Inicializa ventaTmp con tus datos originales (ejemplo)
+    this.consignacionTmp = [
+      { nombre: '', codconsignacion: ''},
+      // Otros productos...
+    ];
+    // Inicializa venta con los datos originales al inicio
+    this.consignacion = this.consignacionTmp;
+    // Obtener el ID del usuario al inicializar el componente
+   }
 
   ngOnInit(){
     this.getConsignacion()
@@ -60,15 +70,18 @@ export class ConsignacionComponent implements OnInit{
 
   getConsignacion(){
     this.consignacionServices.getConsignacion().subscribe((consignacion: IConsignacion[])=>{
-      this.listOfData = consignacion
-      this.listOfDataTmp = consignacion
+      this.consignacion = consignacion
+      this.consignacionTmp = consignacion
     });
   }
 
-  search(){
-    this.listOfData = this.listOfDataTmp.filter((consignacion: IConsignacion)=> consignacion.nombre.toLocaleLowerCase().indexOf(this.value.toLocaleLowerCase()) > -1) 
+  searchPorNombre(){
+    this.consignacion = this.consignacionTmp.filter((producto: IConsignacion)=> producto.nombre.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
   }
-
+  
+  searchPorCodCosignacion(){
+    this.consignacion = this.consignacionTmp.filter((producto: IConsignacion)=> producto.codconsignacion.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+  }
   createConsignacion(){
       this.consignacionServices.saveConsignacion(this.form).subscribe(_=>{
       this.message.success('Consignacion guardado')

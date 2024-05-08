@@ -21,7 +21,7 @@ export class ProductoconsService {
   }
 
   saveProducto(idconsignacion: string, payload: IProductocons): Observable<IProductocons>{
-    return this.http.post<IProductocons>(`${ENDPOINTS.api}productocons/crear/${idconsignacion}`, payload)
+    return this.http.post<IProductocons>(`${ENDPOINTS.api}productocons/${idconsignacion}`, payload)
   }
 
   desactivarProducto(idproducto: string): Observable<IProductocons>{

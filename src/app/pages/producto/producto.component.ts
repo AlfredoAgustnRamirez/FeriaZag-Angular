@@ -7,10 +7,8 @@ import { IProducto } from './interfaces/producto.interface';
 import { ProductoService } from './services/producto.service';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageService, NzMessageModule } from 'ng-zorro-antd/message';
-import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { HttpClient } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-producto',
@@ -30,8 +28,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductoComponent implements OnInit{
   value: string = ''
-  listOfData: IProducto[] = []
-  listOfDataTmp: IProducto[] = []
+  productos: IProducto[] = []
+  productosTmp: IProducto[] = []
   form!: IProducto
   isVisible: boolean = false
   idproducto: string = ''
@@ -46,14 +44,24 @@ export class ProductoComponent implements OnInit{
   precio: string = ''
   activo: string = ''
   consignacionId: string = ''
+  codproducto: string = ''
+  valorinput1: string = ''
+  valorinput2: string = ''
+
 
   constructor(
     private productoServices: ProductoService,
     private message: NzMessageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient
-  ){}
+  ){
+    // Inicializa ventaTmp con tus datos originales (ejemplo)
+    this.productosTmp = [
+      { descripcion: '', codproducto: ''},
+      // Otros productos...
+    ];
+    // Inicializa venta con los datos originales al inicio
+    this.productos = this.productosTmp;
+    // Obtener el ID del usuario al inicializar el componente
+  }
 
   ngOnInit(){
       this.getProducto()
@@ -73,8 +81,8 @@ export class ProductoComponent implements OnInit{
 
   getProducto(){
       this.productoServices.getProducto().subscribe((producto: IProducto[])=>{
-      this.listOfData = producto
-      this.listOfDataTmp = producto
+      this.productos = producto
+      this.productosTmp = producto
    })
   }
 
@@ -100,8 +108,12 @@ export class ProductoComponent implements OnInit{
     })
   }
 
-  search(){
-    this.listOfData = this.listOfDataTmp.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.value.toLocaleLowerCase()) > -1) 
+  searchPorDescripcion(){
+    this.productos = this.productosTmp.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+  }
+  
+  searchPorCodigo(){
+    this.productos = this.productosTmp.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
   }
 
 }

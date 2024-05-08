@@ -19,4 +19,9 @@ export class VentaService {
     return this.http.get<IVenta[]>(`${ENDPOINTS.api}venta/listar`)
   }
 
+  registrarVenta(idUsuario: string, totalVenta: number, fecha: string) {
+    const body = {iduser: idUsuario, total_venta: totalVenta, fecha: fecha};
+    return this.http.post<any>(`${ENDPOINTS.api}venta/register`, body);
+  }
+
 }

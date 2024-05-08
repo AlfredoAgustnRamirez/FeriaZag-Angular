@@ -76,9 +76,8 @@
     </div>
     <div class="total">
       <p class="ptotal">Total:</p>
-      <input class="input" type="text" [value]="totalVenta" readonly />
+      <input  class="input-venta" type="text" [value]="totalVenta" readonly />
+      <button class="button" (click)="registrarVenta()">Cobrar</button>
     </div>
   </div>
 </div>
-
-<p>Usuario: {{userId}}</p>

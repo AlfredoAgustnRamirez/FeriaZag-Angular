@@ -1,10 +1,8 @@
 <h1 class="listusuarios text-center">Listado de usuarios {{userId}}</h1>
 
 <div class="flex justify-content-between p-5">
-    <div class="input">
-        <input (keyup)="search()" nz-input placeholder="Buscar por nombre" [(ngModel)]="value" type="text" />
-    </div>
-    <button (click)="openModal()" nz-button nzType="primary">Agregar</button>
+    <input class="input" (keyup)="search()" placeholder="Buscar por nombre" [(ngModel)]="value" type="text" />
+    <button class="button" (click)="openModal()" nz-button nzType="primary">Agregar</button>
 </div>
 
 <div class="table-container">
@@ -32,13 +30,13 @@
                   <td class="text-center">{{ data.usuario }}</td>
                   <td class="text-center">{{ data.activo }}</td>
                 <td>
-                    <button (click)="edit(data)" nz-button nzType="primary"> 
+                    <button class="nz-button" (click)="edit(data)" nz-button nzType="primary"> 
                         <span  nz-icon nzType="drop"></span>
                         Editar
                     </button>
                 </td>
                 <td>
-                    <button nz-popconfirm 
+                    <button class="nz-button" nz-popconfirm 
                     nzPopconfirmTitle="Estas seguro que desea desactivar el usuario?"
                     nzPopconfirmPlacement="bottom"
                     (nzOnConfirm)="desactivarUsuario(data.iduser || '')"
@@ -47,7 +45,7 @@
                     </button>
                 </td>
                 <td>
-                    <button nz-popconfirm
+                    <button class="nz-button" nz-popconfirm
                     nzPopconfirmTitle="Estas seguro que desea activar el usuario?"
                     nzPopconfirmPlacement="bottom"
                     (nzOnConfirm)="activarUsuario(data.iduser || '')"

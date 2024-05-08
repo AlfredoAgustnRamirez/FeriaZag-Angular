@@ -1,12 +1,33 @@
-.imput{
-    width: 70%;
+.input {
+  padding: 12px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #d682b1;
+  background-color: #e2aed9;
 }
 
-[nz-button] {
-    margin-right: 8px;
-    margin-bottom: 12px;
-    background-color: rgb(201, 167, 196);
-  }
+.button{
+  background-color: #cf77a0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.nz-button {
+  left: 50%;
+  bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+  transform: translateX(-50%);
+  background-color: #c977bb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nz-button:hover {
+  background-color: #cf77a0;
+}
 
   .table-container {
     overflow-x: auto; /* Habilita el desplazamiento horizontal */

@@ -11,13 +11,17 @@ export class WelcomeComponent implements OnInit {
 
   horaActual: string = '';
   fechaActual: string = '';
+  userId: string | null = null;
+  nombreUsr: string | null = null;
 
-  constructor(private AuthService: AuthService) {
+  constructor(private AuthService: AuthService,) {
     this.mostrarFechaHora(); 
     setInterval(() => this.mostrarFechaHora(), 1000);
    }
 
   ngOnInit() { 
+    this.userId = this.AuthService.getUserId()
+    this.userId = this.AuthService.getUserNombre()
   }
 
   mostrarFechaHora() {

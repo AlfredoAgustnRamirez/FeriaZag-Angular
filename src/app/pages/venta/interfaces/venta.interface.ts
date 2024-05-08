@@ -9,4 +9,6 @@ export interface IVenta{
    precio?: string
    descripcion: string
    codproducto: string
+   fecha?: string
+   total_venta?: string
 }

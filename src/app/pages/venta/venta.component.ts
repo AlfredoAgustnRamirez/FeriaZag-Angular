@@ -1,4 +1,4 @@
-import { Component, PipeTransform } from '@angular/core'
+import { Component, OnDestroy, OnInit, PipeTransform } from '@angular/core'
 import { VentaService } from './services/venta.service';
 import { IVenta } from './interfaces/venta.interface';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -10,11 +10,10 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProductoComponent } from '../producto/producto.component';
 import { AuthService } from '../../core/auth/services/auth.service';
-import { UsuarioService } from '../usuario/services/usuario.service';
 import { IUsuario } from '../usuario/interfaces/usuario.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-venta',
@@ -35,7 +34,7 @@ import { IUsuario } from '../usuario/interfaces/usuario.interface';
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.scss',
 })
-export class VentaComponent {
+export class VentaComponent implements OnInit, OnDestroy {
   venta: IVenta[] = []
   ventaTmp: IVenta[] = []
   productosAgregados: IVenta[] = [];
@@ -45,19 +44,21 @@ export class VentaComponent {
   descripcion: string = ''
   totalVenta: string = '';
   precio: string = ''
-  iduser?: string 
+  iduser: string = ''
   codconsignacion?: string = ''
   idcabecera?: string = ''
   codproducto: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
-  userId: string | null = null;
+  userId: string = '';
+  fecha: string = ''
+  total_venta: string = ''
+  private ventaSubscription: Subscription | undefined;
 
   constructor(
     private VentaService: VentaService,
     private AuthService : AuthService,
     private message: NzMessageService,
-    private NzModalService: NzModalService,
   ){ 
      // Inicializa ventaTmp con tus datos originales (ejemplo)
      this.ventaTmp = [
@@ -72,6 +73,13 @@ export class VentaComponent {
   ngOnInit(){
     this.userId = this.AuthService.getUserId()    
     this.getProducto()
+  }
+
+  ngOnDestroy() {
+    // Desuscribirse para evitar memory leaks
+    if (this.ventaSubscription) {
+      this.ventaSubscription.unsubscribe();
+    }
   }
 
   getProducto(){
@@ -90,13 +98,11 @@ agregarProducto(producto: IVenta): void {
 actualizarTotalVenta(): void {
   // Inicializar totalVenta como número
   let totalNumerico: number = 0;
-
   // Sumar los precios de los productos en el array productosAgregados
   for (const producto of this.productosAgregados) {
       // Convertir el precio del producto de string a número y sumarlo
       totalNumerico += parseFloat(producto.precio || '');
   }
-
   // Asignar el total numerico a totalVenta como string con dos decimales
   this.totalVenta = '$ ' + totalNumerico.toFixed(2);
 }
@@ -118,6 +124,7 @@ searchPorDescripcion(){
 searchPorCodigo(){
   this.venta = this.ventaTmp.filter((producto: IVenta)=> producto.codproducto.toLocaleLowerCase().includes(this.valorinput2.toLocaleLowerCase())) 
 }
+
   openModal(){
     this.isVisible = true  
   }
@@ -126,4 +133,16 @@ searchPorCodigo(){
     this.isVisible = false
   }
 
+  registrarVenta() {
+    this.actualizarTotalVenta()
+    let totalString: string = this.totalVenta
+    let total: number = parseFloat(totalString.replace('$',''))
+    this.VentaService.registrarVenta(this.userId, total, this.fecha).subscribe(_=> {
+      this.message.success('Venta registrada correctamente:');
+      },
+      (error) => {
+        this.message.success('Error al registrar la venta:', error);
+      }
+    ); 
+  }
 }

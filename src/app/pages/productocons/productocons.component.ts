@@ -31,7 +31,7 @@ import { ICategoria } from '../categoria/interfaces/categoria.interface';
   templateUrl: './productocons.component.html',
   styleUrl: './productocons.component.scss'
 })
-export class ProductoconsComponent {
+export class ProductoconsComponent implements OnInit{
 
   value: string = ''
   productos: IProductocons[] = []
@@ -51,7 +51,8 @@ export class ProductoconsComponent {
   codproducto: string = ''
   title?: string = ''
   codigoConsignacion?: string = ''
-  opcionSeleccionada: string = 'si';
+  valorinput1: string = ''
+  valorinput2: string = ''
 
   constructor(
     private productoconsServices: ProductoconsService,
@@ -59,7 +60,16 @@ export class ProductoconsComponent {
     private message: NzMessageService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-  ){}
+  ){
+    // Inicializa ventaTmp con tus datos originales (ejemplo)
+    this.productosTmp = [
+      { descripcion: '', codproducto: ''},
+      // Otros productos...
+    ];
+    // Inicializa venta con los datos originales al inicio
+    this.productos = this.productosTmp;
+    // Obtener el ID del usuario al inicializar el componente
+  }
 
   ngOnInit(){
     this.consignacionId = this.route.snapshot.paramMap.get('idconsignacion') || '';
@@ -70,6 +80,7 @@ export class ProductoconsComponent {
 
    initForm(){
     this.form = {
+      codproducto: '',
       idcategoria: '',
       descripcion: '',
       talle: '',
@@ -103,7 +114,7 @@ export class ProductoconsComponent {
   }
 
   createProducto(){
-      this.productoconsServices.saveProducto(this.consignacionId,this.form).subscribe(_=>{
+      this.productoconsServices.saveProducto(this.consignacionId, this.form).subscribe(_=>{
       this.message.success('Producto creado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
       this.initForm() 
@@ -133,9 +144,14 @@ export class ProductoconsComponent {
     })
   }
 
-  search(){
-    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.value.toLocaleLowerCase()) > -1) 
+  searchPorDescripcion(){
+    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
   }
+  
+  searchPorCodigo(){
+    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+  }
+  
 
   update(){
     this.productoconsServices.updateProducto(this.form).subscribe(_=>{

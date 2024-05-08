@@ -31,7 +31,7 @@ export class AuthComponent {
   email: string = ''
   password: string = ''
   userId: string  = ''
-  nombre: string = ''
+  nombreUsr: string = ''
 
   constructor(
     private AuthService: AuthService,
@@ -52,7 +52,10 @@ export class AuthComponent {
        // Verifica si session.iduser está presente y no es undefined
        if (session) {
          localStorage.setItem('SESSION.localStorage', JSON.stringify(session));
-         console.log('Id user: ', session.userId);
+         this.userId = session.userId;
+         this.nombreUsr = session.nombreUsr;
+         const userId = session.userId;
+         localStorage.setItem('userId', userId);
          this.router.navigate(['/welcome']);
        } else {
          console.error('El ID de usuario no está definido en la sesión.');
