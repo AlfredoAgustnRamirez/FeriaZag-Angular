@@ -10,4 +10,5 @@ export interface IProducto{
     talle?: string
     precio?: string
     activo?: string
+    estado?: string
 }

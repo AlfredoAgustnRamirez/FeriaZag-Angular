@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, PipeTransform } from '@angular/core';
-import { VentaService } from './services/venta.service';
-import { IVenta } from './interfaces/venta.interface';
+import { VentaService } from '../venta/services/venta.service';
+import { IVenta } from '../venta/interfaces/venta.interface';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 import { ProductoService } from '../producto/services/producto.service';
 
 @Component({
-  selector: 'app-venta',
+  selector: 'app-reserva',
   standalone: true,
   imports: [
     NzInputModule,
@@ -32,10 +32,10 @@ import { ProductoService } from '../producto/services/producto.service';
     RouterModule,
     RouterOutlet,
   ],
-  templateUrl: './venta.component.html',
-  styleUrl: './venta.component.scss',
+  templateUrl: './reserva.component.html',
+  styleUrl: './reserva.component.scss',
 })
-export class VentaComponent implements OnInit, OnDestroy {
+export class ReservaComponent implements OnInit, OnDestroy {
   venta: IVenta[] = [];
   ventaTmp: IVenta[] = [];
   productosAgregados: IVenta[] = [];

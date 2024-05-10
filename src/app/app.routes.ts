@@ -21,6 +21,8 @@ export const routes: Routes = [
       { path: 'venta', loadChildren: () => import('./pages/venta/venta.routes').then(m => m.VENTA_ROUTES) },
       //Rutas de usuario
       { path: 'usuario', loadChildren: () => import('./pages/usuario/usuario.routes').then(m => m.USUARIO_ROUTES) },
+      //Rutas de usuario
+      { path: 'reserva', loadChildren: () => import('./pages/reserva/reserva.routes').then(m => m.RESERVA_ROUTES) },
 
     ]
 

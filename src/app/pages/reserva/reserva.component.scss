@@ -1,0 +1,196 @@
+.container {
+    /* Estilos para el contenedor */
+    background-color: rgb(212, 178, 194);
+  }
+  
+  .header{
+    color: rgb(245, 138, 231);
+  }
+  
+  
+  .buscar{
+    color: rgb(245, 138, 231);
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-container::before {
+    content: attr(data-label); /* Utiliza el atributo data-label para el nombre */
+    font-weight: bold;
+    margin-bottom: 5px; /* Espacio entre el nombre y el input */
+  }
+  
+  .input {
+    flex: 1; /* Los inputs ocupan el mismo espacio */
+    padding: 12px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #d682b1;
+    margin-left: auto;
+    color: #cf77a0;
+    background-color: #e2aed9;
+  }
+  
+  .input-venta {
+    flex: 1;
+    background-color: #e2aed9;
+    border: 1px solid #d682b1;
+    width: 100px;
+  }
+  
+  .input-codigo {
+    flex: 1; /* Los inputs ocupan el mismo espacio */
+    padding: 12px;
+    width: 100%;
+    max-width: 250px;
+    border: 1px solid #d682b1;
+    margin-left: auto;
+    color: #cf77a0;
+    background-color: #e2aed9;
+  }
+  
+  .total{
+    width: 18%;
+    display: flex;
+    margin-left: 45%;
+    margin-top: 20px;
+    height: 30px;
+  }
+  
+  .ptotal{
+    color: #b87795;
+    margin-right: 2px;
+    font-size: 22px;
+  }
+  
+  .nz-button {
+    left: 50%;
+    bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+    transform: translateX(-50%);
+    background-color: #c977bb;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .nz-button:hover {
+    background-color: #cf77a0;
+  }
+  
+  .table-container {
+    width: 100%;
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    max-width: 100%; /* Limita el ancho máximo al contenedor */
+    position: relative;
+  }
+  
+  .table-container th, .table-container td {
+    border: 1px solid #ddd; /* Añade bordes a las celdas */
+    padding: 5px;
+    background-color: rgb(233, 204, 220);
+  }
+  
+  .table-container tr {
+    height: 2px; /* Altura de las filas */
+  }
+  
+  .dropdown {
+    position: absolute;
+    background-color: rgb(248, 189, 216);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    list-style-type: none;
+    margin: 0;
+    z-index: 1000;
+    width: 23%;
+  }
+  
+  .dropdown-codigo {
+    position: absolute;
+    background-color: rgb(248, 189, 216);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    list-style-type: none;
+    margin: 0;
+    margin-left: 25%;
+    z-index: 1000;
+    width: 19%;
+  }
+  
+  .dropdown li {
+    cursor: pointer;
+  }
+  
+  .dropdown li:hover {
+    background-color: #ee99bd;
+  }
+  
+  .dropdown-codigo li {
+    cursor: pointer;
+  }
+  
+  .dropdown-codigo li:hover {
+    background-color: #ee99bd;
+  }
+  
+  .button {
+    display: flex;
+    background-color: #ee99bd;
+    border: 1px solid #d682b1;
+    width: 100%;
+    margin-left: 4px;
+    color: #b15a8b;
+  }
+  
+  @media screen and (max-width: 768px) {
+    button {
+      font-size: 3vw; /* Cambiar tamaño de fuente para pantallas más pequeñas */
+    }
+  }
+  
+  /* Media query para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .container {
+      flex-basis: calc(50% - 10px); /* Ancho del 50% menos el margen */
+    }
+  }
+  
+  /* Media query para ajustar el tamaño de las celdas en dispositivos pequeños */
+  @media (max-width: 600px) {
+    .responsive-table th, .responsive-table td {
+      padding: 10px;
+      font-size: 10px;
+    }
+  }
+  
+  /* Media query para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .input-container {
+      flex-basis: calc(50% - 5px); /* Ancho del 50% menos el espacio entre elementos */
+    }
+  }
+  
+  /* Media query para pantallas más pequeñas */
+  @media screen and (max-width: 768px) {
+    .input-container {
+        margin: 10px;
+    }
+    input {
+      padding: 8px;
+      border-radius: 3px;
+    }
+  }
+  
+  /* Media query para pantallas aún más pequeñas */
+  @media screen and (max-width: 480px) {
+    input {
+        padding: 26px;
+    }
+  }

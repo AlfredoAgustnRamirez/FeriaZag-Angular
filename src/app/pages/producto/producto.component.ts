@@ -47,7 +47,7 @@ export class ProductoComponent implements OnInit{
   codproducto: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
-
+  estado: string = ''
 
   constructor(
     private productoServices: ProductoService,
@@ -64,8 +64,8 @@ export class ProductoComponent implements OnInit{
   }
 
   ngOnInit(){
-      this.getProducto()
-   }
+    this.obtenerProductos()
+  }
 
   openModal(){
     this.isVisible = true
@@ -79,12 +79,13 @@ export class ProductoComponent implements OnInit{
     this.isVisible = false
   }
 
-  getProducto(){
-      this.productoServices.getProducto().subscribe((producto: IProducto[])=>{
-      this.productos = producto
-      this.productosTmp = producto
-   })
+  obtenerProductos(){
+    this.productoServices.getProducto().subscribe((productos: IProducto[]) => {
+      this.productos = productos;
+      this.productosTmp = productos;
+    });
   }
+
 
   reset(){
     this.codconsignacion = ''
@@ -97,14 +98,14 @@ export class ProductoComponent implements OnInit{
   desactivarProducto(idproducto: string){
     this.productoServices.desactivarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto desactivado')
-      this.getProducto()
+      this.obtenerProductos()
     })
   }
 
   activarProducto(idproducto: string){
     this.productoServices.activarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto activado')
-      this.getProducto()
+      this.obtenerProductos()
     })
   }
 
