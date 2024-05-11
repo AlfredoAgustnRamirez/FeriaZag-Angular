@@ -1,3 +1,5 @@
+import { IVentasDetalles } from "../../ventas-detalles/interfaces/ventas-detalles.interface"
+
 export interface IVenta{
    iduser?: string 
    idcabecera?: string
@@ -12,4 +14,5 @@ export interface IVenta{
    fecha?: string
    total_venta?: string
    nuevoEstado?: string 
+   detalles?: IVentasDetalles[]
 }

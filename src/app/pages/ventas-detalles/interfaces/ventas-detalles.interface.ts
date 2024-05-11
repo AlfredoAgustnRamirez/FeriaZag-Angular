@@ -3,4 +3,6 @@ export interface IVentasDetalles{
     idcabecera?: string
     idproducto?: string
     precio?: string 
- }
+    codproducto?: string
+    fecha?: string
+}

@@ -1,0 +1,72 @@
+.titulo{
+    color:rgb(212, 89, 165)
+}
+
+.table-container {
+    width: 100%;
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    max-width: 100%; /* Limita el ancho máximo al contenedor */
+    position: relative;
+  }
+  
+  .table-container th, .table-container td {
+    border: 1px solid #ddd; /* Añade bordes a las celdas */
+    padding: 5px;
+    background-color: rgb(233, 204, 220);
+  }
+  
+  .table-container tr {
+    height: 2px; /* Altura de las filas */
+  }
+
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .responsive-table th, .responsive-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .responsive-table {
+      overflow-x: auto;
+      display: block;
+    }
+  
+    .responsive-table thead, .responsive-table tbody, .responsive-table th, .responsive-table td, .responsive-table tr {
+      display: block;
+    }
+  
+    .responsive-table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    .responsive-table tr {
+      border: 1px solid #ddd;
+    }
+  
+    .responsive-table td {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      padding-left: 50%;
+      text-align: left;
+    }
+  
+    .responsive-table td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      content: attr(data-label);
+    }
+  }
+  

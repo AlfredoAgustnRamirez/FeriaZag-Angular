@@ -159,21 +159,7 @@ export class ReservaComponent implements OnInit, OnDestroy {
     this.isVisible = false;
   }
 
-  registrarVenta() {
-    this.actualizarTotalVenta();
-    let totalString: string = this.totalVenta;
-    let total: number = parseFloat(totalString.replace('$', ''));
-    this.VentaService.registrarVenta(this.userId, total, this.fecha).subscribe(
-      (_) => {
-        this.message.success('Venta registrada correctamente:');
-        this.desactivarProducto(this.idproducto)
-        this.resetValores();
-      },
-      (error) => {
-        this.message.success('Error al registrar la venta:', error);
-      }
-    );
-  }
+  
 
   desactivarProducto(idproducto: string){
     this.productoServices.desactivarProducto(idproducto).subscribe(_=>{

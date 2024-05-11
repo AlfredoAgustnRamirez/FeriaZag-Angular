@@ -164,7 +164,14 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.actualizarTotalVenta();
     let totalString: string = this.totalVenta;
     let total: number = parseFloat(totalString.replace('$', ''));
-    this.VentaService.registrarVenta(this.userId, total, this.fecha).subscribe(
+
+  // Crear el array de detalles
+  const detalles = this.productosAgregados.map(producto => ({
+    idproducto: producto.idproducto,
+    precio: producto.precio
+  }));
+
+    this.VentaService.registrarVenta(this.userId, total, this.fecha, detalles).subscribe(
       (_) => {
         this.message.success('Venta registrada correctamente:');
         //Cambiar el estado de activo despues realizar la venta
