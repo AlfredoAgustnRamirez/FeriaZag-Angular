@@ -13,7 +13,7 @@
     </div>
     @if(opcionSeleccionada === 'vendidos'){
 <div class="table-container">
-    <nz-table class="responsive-table" #productosNoVendidos [nzData]="productosNoVendidosTmp" [nzPageSize]="7" [nzShowPagination]="true">
+    <nz-table class="responsive-table" #productosNoVendidos [nzData]="productosNoVendidosTmp"  [nzShowPagination]="true">
         <thead>
           <tr>
             
@@ -62,7 +62,7 @@
 
     @if(opcionSeleccionada === 'no_vendidos'){
         <div class="table-container">
-            <nz-table class="responsive-table" #productosVendidos [nzData]="productosVendidosTmp" [nzPageSize]="7" [nzShowPagination]="true">
+            <nz-table class="responsive-table" #productosVendidos [nzData]="productosVendidosTmp" [nzShowPagination]="true">
                 <thead>
                   <tr>
                     

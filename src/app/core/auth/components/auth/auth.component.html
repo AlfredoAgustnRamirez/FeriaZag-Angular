@@ -1,6 +1,6 @@
 <div class="flex w-screen h-screen justify-content-center align-items-center">
     <div class="border-round-md bg-white p-5">
-      <h1 class="text-center">Bienvenido</h1>
+      <h1 class="titulo text-center">Bienvenido</h1>
     <nz-input-group [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
         <input type="text" nz-input placeholder="Ingrese su Correo" [(ngModel)]="email"/>
       </nz-input-group>
@@ -24,6 +24,6 @@
           (click)="passwordVisible = !passwordVisible"
         ></span>
       </ng-template>
-        <button (click)="login()" class="w-full mt-3" nz-button nzType="primary">Ingresar</button>
+        <button (click)="login()" class="button w-full mt-3" nz-button nzType="primary">Ingresar</button>
     </div>
 </div>

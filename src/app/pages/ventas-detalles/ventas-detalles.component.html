@@ -1,16 +1,9 @@
 <h1 class="titulo text-center">Listado de Ventas Detalles</h1>
 
 <div class="table-container mt-4">
-    <nz-table 
-      [nzShowPagination]="true"
-      [nzPageSize]="4"
-      class="responsive-table"
-      #basicTable
-      [nzData]="ventasDetalle"
-    >
-      <thead>
+  <nz-table class="responsive-table" #ventasDetalle [nzData]="ventasDetalleTmp" [nzShowPagination]="true">      
+    <thead>
         <tr>
-          <th class="text-center">Venta nro</th>
           <th class="text-center">IdCabecera</th>
           <th class="text-center">IdProducto</th>
           <th class="text-center">CodProducto</th>
@@ -19,9 +12,8 @@
         </tr>
       </thead>
       <tbody class="align-item-center">
-        @for (data of ventasDetalle; track $index) {
+        @for (data of ventasDetalle.data; track $index) {
         <tr>
-          <td class="text-center">{{ data.iddetalle }}</td>
           <td class="text-center">{{ data.idcabecera }}</td>
           <td class="text-center">{{ data.idproducto }}</td>
           <td class="text-center">{{ data.codproducto }}</td>
