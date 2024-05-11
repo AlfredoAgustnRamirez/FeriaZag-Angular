@@ -9,11 +9,19 @@
     height: 100vh;
   }
   
+.menu{
+  background-color: #dbb5c4;
+}
+
+.submenu{
+  background-color: #dbb5c4;
+}
+
   .menu-sidebar {
     position: relative;
     z-index: 10;
     min-height: 100vh;
-    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    box-shadow: 2px 0 6px rgba(214, 91, 173, 0.35);
     background: #dbb5c4;
   }
   
@@ -26,7 +34,7 @@
   }
   
   .trigger:hover {
-    color: #1890ff;
+    color: #d87dbd;
   }
   
   .sidebar-logo {
@@ -62,6 +70,11 @@
     width: 100%;
     z-index: 2;
   }
+
+  .nz-menu-item {
+    background-color: #c53299;
+    color: #c53299;
+  }
   
   .app-header {
     position: relative;
@@ -71,9 +84,6 @@
     box-shadow: 0 1px 4px rgba(235, 197, 218, 0.08);
   }
   
-  nz-content {
-    margin: 24px;
-  }
   
   .inner-content {
     padding: 24px;

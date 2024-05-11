@@ -13,55 +13,57 @@
         <h1>FeriaZag</h1>
       </a>
     </div>
-    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    <ul class="menu" nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzOpen nzTitle="Consignacion" nzIcon="bars">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="/consignacion">Listar</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Producto" nzIcon="bars">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="./producto">Productos</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a href="./producto">Productos vendidos</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Categoria" nzIcon="bars">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="./categoria">Listar</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Usuario" nzIcon="bars">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="./usuario">Listar</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Venta" nzIcon="form">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a href="./venta">Listar</a>
+          <li class="submenu" nz-menu-item nzMatchRouter>
+            <a href="./venta">Vender</a>
+          </li>
+        </ul>
+        <ul>
+          <li class="submenu" nz-menu-item nzMatchRouter>
+            <a href="./ventas-detalles">Ventas detalles</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Reserva" nzIcon="form">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="./reserva">Listar</a>
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Pago" nzIcon="form">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li class="submenu" nz-menu-item nzMatchRouter>
             <a href="./pago">Listar</a>
           </li>
         </ul>

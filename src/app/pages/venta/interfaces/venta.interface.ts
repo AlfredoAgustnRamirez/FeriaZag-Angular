@@ -11,4 +11,5 @@ export interface IVenta{
    codproducto: string
    fecha?: string
    total_venta?: string
+   nuevoEstado?: string 
 }

@@ -30,6 +30,10 @@ export class ProductoComponent implements OnInit{
   value: string = ''
   productos: IProducto[] = []
   productosTmp: IProducto[] = []
+  productosVendidos: IProducto[] = []
+  productosNoVendidos: IProducto[] = []
+  productosVendidosTmp: IProducto[] = []
+  productosNoVendidosTmp: IProducto[] = []
   form!: IProducto
   isVisible: boolean = false
   idproducto: string = ''
@@ -48,6 +52,8 @@ export class ProductoComponent implements OnInit{
   valorinput1: string = ''
   valorinput2: string = ''
   estado: string = ''
+  opcionSeleccionada: string = '';
+  data: string = ''
 
   constructor(
     private productoServices: ProductoService,
@@ -64,7 +70,8 @@ export class ProductoComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.obtenerProductos()
+    this.obtenerProductosVendidos();
+    this.obtenerProductos();
   }
 
   openModal(){
@@ -79,13 +86,24 @@ export class ProductoComponent implements OnInit{
     this.isVisible = false
   }
 
-  obtenerProductos(){
-    this.productoServices.getProducto().subscribe((productos: IProducto[]) => {
-      this.productos = productos;
-      this.productosTmp = productos;
+  obtenerProductosVendidos() {
+    this.productoServices.getProductoVendidos().subscribe(productos => {
+      this.productosVendidos = productos;
+      this.productosVendidosTmp = productos;
     });
   }
 
+  obtenerProductos(){
+    this.productoServices.getProducto().subscribe(productos => {
+      this.productosNoVendidos = productos;
+      this.productosNoVendidosTmp = productos;      
+    });
+  }
+
+   // Método para manejar el cambio en el select
+   onSelectChange(event: any) {
+    this.opcionSeleccionada = event.target.value;
+  }
 
   reset(){
     this.codconsignacion = ''
@@ -94,27 +112,30 @@ export class ProductoComponent implements OnInit{
     this.activo = ''
  }
  
-
   desactivarProducto(idproducto: string){
     this.productoServices.desactivarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto desactivado')
       this.obtenerProductos()
+      this.obtenerProductosVendidos()
     })
   }
 
   activarProducto(idproducto: string){
     this.productoServices.activarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto activado')
+      this.obtenerProductosVendidos()
       this.obtenerProductos()
     })
   }
 
   searchPorDescripcion(){
-    this.productos = this.productosTmp.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
-  }
+      this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+      this.productosVendidosTmp = this.productosVendidos.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+    }
   
   searchPorCodigo(){
-    this.productos = this.productosTmp.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productosVendidosTmp = this.productosVendidos.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
   }
 
 }

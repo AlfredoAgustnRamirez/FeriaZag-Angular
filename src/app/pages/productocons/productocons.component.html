@@ -1,15 +1,19 @@
 
-
-    <h1 class="codconsignacion text-center"> Consignacion: {{codigoConsignacion}} </h1>
+<h1 class="codconsignacion text-center"> Consignacion: {{codigoConsignacion}} </h1>
 
     <div class="input-container">
-        <input class="input-codigo m-4" (keyup)="searchPorDescripcion()"  placeholder="Buscar por nombre" [(ngModel)]="valorinput1" type="text" />
-        <input class="input-codigo m-4" (keyup)="searchPorCodigo()"  placeholder="Buscar por codigo" [(ngModel)]="valorinput2" type="text" />
+        <select class="select" (change)="onSelectChange($event)">
+          <option value="">Buscar producto por</option>
+          <option value="no_vendidos">Productos vendidos</option>
+          <option value="vendidos">Productos no vendidos</option>
+        </select>
+        <input class="input-codigo m-4" (keyup)="searchPorDescripcion()"  placeholder="Buscar producto por nombre" [(ngModel)]="valorinput1" type="text" />
+        <input class="input-codigo m-4" (keyup)="searchPorCodigo()"  placeholder="Buscar producto por codigo" [(ngModel)]="valorinput2" type="text" />
         <button class="button" (click)="openModal()" nz-button nzType="primary">Agregar</button>
     </div>
-
+    @if(opcionSeleccionada === 'vendidos'){
 <div class="table-container">
-    <nz-table class="responsive-table" #basicTable [nzData]="productos">
+    <nz-table class="responsive-table" #productosNoVendidos [nzData]="productosNoVendidosTmp" [nzPageSize]="7" [nzShowPagination]="true">
         <thead>
           <tr>
             
@@ -22,11 +26,10 @@
             <th class="text-center">Activo</th>
             <th class="text-center">Editar</th>
             <th class="text-center">Desactivar</th>
-            <th class="text-center">Activar</th>
           </tr>
         </thead>
         <tbody class="align-item-center">
-            @for (data of basicTable.data; track $index) {
+            @for (data of productosNoVendidos.data; track $index) {
                 <tr>
                   <td class="text-center">{{ data.codconsignacion }}</td>
                   <td class="text-center">{{ data.categoria }}</td>
@@ -50,21 +53,61 @@
                         Desactivar
                     </button>
                 </td>
-                <td>
-                    <button class="nz-button" nz-popconfirm
-                    nzPopconfirmTitle="Estas seguro que desea activar el producto?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="activarProducto(data.idproducto || '')"
-                     nz-button nzType="primary">
-                        Activar
-                    </button>
-                </td>
                 </tr>
             }
         </tbody>
     </nz-table>
 </div>
+    }
 
+    @if(opcionSeleccionada === 'no_vendidos'){
+        <div class="table-container">
+            <nz-table class="responsive-table" #productosVendidos [nzData]="productosVendidosTmp" [nzPageSize]="7" [nzShowPagination]="true">
+                <thead>
+                  <tr>
+                    
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Codigo Producto</th>
+                    <th class="text-center">Descripcion</th>
+                    <th class="text-center">Talle</th>
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Activo</th>
+                    <th class="text-center">Editar</th>
+                    <th class="text-center">Activar</th>
+                  </tr>
+                </thead>
+                <tbody class="align-item-center">
+                    @for (data of productosVendidos.data; track $index) {
+                        <tr>
+                          <td class="text-center">{{ data.codconsignacion }}</td>
+                          <td class="text-center">{{ data.categoria }}</td>
+                          <td class="text-center">{{ data.codproducto }}</td>
+                          <td class="text-center">{{ data.descripcion }}</td>
+                          <td class="text-center">{{ data.talle }}</td>
+                          <td class="text-center">{{ data.precio }}</td>
+                          <td class="text-center">{{ data.activo }}</td>
+                        <td>
+                            <button class="nz-button" (click)="edit(data)" nz-button nzType="primary"> 
+                                <span  nz-icon nzType="drop"></span>
+                                Editar
+                            </button>
+                        </td>
+                        <td>
+                            <button class="nz-button" nz-popconfirm
+                            nzPopconfirmTitle="Estas seguro que desea activar el producto?"
+                            nzPopconfirmPlacement="bottom"
+                            (nzOnConfirm)="activarProducto(data.idproducto || '')"
+                             nz-button nzType="primary">
+                                Activar
+                            </button>
+                        </td>
+                        </tr>
+                    }
+                </tbody>
+            </nz-table>
+        </div>
+            } 
 <nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idproducto?'Editar producto':'Agregar producto'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent> 
         <nz-select nzPlaceHolder="Lista de categoria" class="w-full" [(ngModel)]="form.idcategoria">

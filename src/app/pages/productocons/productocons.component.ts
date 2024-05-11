@@ -13,6 +13,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CategoriaService } from '../categoria/services/categoria.service';
 import { ICategoria } from '../categoria/interfaces/categoria.interface';
+import { IProducto } from '../producto/interfaces/producto.interface';
+import { ProductoService } from '../producto/services/producto.service';
 
 @Component({
   selector: 'app-productocons',
@@ -37,6 +39,10 @@ export class ProductoconsComponent implements OnInit{
   productos: IProductocons[] = []
   productosTmp: IProductocons[] = []
   listCategoria: ICategoria [] = []
+  productosVendidos: IProducto[] = []
+  productosNoVendidos: IProducto[] = []
+  productosVendidosTmp: IProducto[] = []
+  productosNoVendidosTmp: IProducto[] = []
   form!: IProductocons
   isVisible: boolean = false
   descripcion: string = ''
@@ -53,10 +59,12 @@ export class ProductoconsComponent implements OnInit{
   codigoConsignacion?: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
+  opcionSeleccionada: string = '';
 
   constructor(
     private productoconsServices: ProductoconsService,
     private listcategoriaService: CategoriaService,
+    private productoServices: ProductoService,
     private message: NzMessageService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -74,9 +82,10 @@ export class ProductoconsComponent implements OnInit{
   ngOnInit(){
     this.consignacionId = this.route.snapshot.paramMap.get('idconsignacion') || '';
     this.obtenerProductosPorConsignacion(this.consignacionId)
+    this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
     this.initForm()
     this.getCategoria()
-   }
+  }
 
    initForm(){
     this.form = {
@@ -89,7 +98,7 @@ export class ProductoconsComponent implements OnInit{
     }
   }
 
-  getCategoria(){
+   getCategoria(){
     this.listcategoriaService.getCategoria().subscribe(listCategoria => {
       this.listCategoria = listCategoria
     })
@@ -129,11 +138,11 @@ export class ProductoconsComponent implements OnInit{
     this.activo = ''
  }
  
-
   desactivarProducto(idproducto: string){
     this.productoconsServices.desactivarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto desactivado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
+      this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
     })
   }
 
@@ -141,17 +150,25 @@ export class ProductoconsComponent implements OnInit{
     this.productoconsServices.activarProducto(idproducto).subscribe(_=>{
       this.message.success('Producto activado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
+      this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
     })
   }
 
   searchPorDescripcion(){
-    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+    this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+    this.productosVendidosTmp = this.productosVendidos.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
   }
   
   searchPorCodigo(){
-    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productosVendidosTmp = this.productosVendidos.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
   }
   
+  // Método para manejar el cambio en el select
+  onSelectChange(event: any) {
+    this.opcionSeleccionada = event.target.value;
+  }
+
 
   update(){
     this.productoconsServices.updateProducto(this.form).subscribe(_=>{
@@ -171,6 +188,21 @@ export class ProductoconsComponent implements OnInit{
         this.productos = producto;
         const productoSeleccionado = producto[0];
         this.codigoConsignacion = productoSeleccionado.codconsignacion;
+        this.productosNoVendidos = producto;
+        this.productosNoVendidosTmp = producto; 
       });
   }
+
+  obtenerProductosVendidosPorConsignacion(consignacionId: string) {
+    this.productoconsServices.getProductoVendidosPorConsignacion(this.consignacionId)
+      .subscribe(producto => {
+        this.productosTmp = producto;
+        this.productos = producto;
+        const productoSeleccionado = producto[0];
+        this.codigoConsignacion = productoSeleccionado.codconsignacion;
+        this.productosVendidos = producto;
+        this.productosVendidosTmp = producto; 
+      });
+  }
+
 }

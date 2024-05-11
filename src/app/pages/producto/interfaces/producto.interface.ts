@@ -11,4 +11,5 @@ export interface IProducto{
     precio?: string
     activo?: string
     estado?: string
+    data?: string
 }

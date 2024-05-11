@@ -43,7 +43,7 @@ export class VentaComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
   value: string = '';
   descripcion: string = '';
-  totalVenta: string = '';
+  totalVenta: string = '$ 0.00';
   precio: string = '';
   iduser: string = '';
   idproducto: string = ''
@@ -54,6 +54,7 @@ export class VentaComponent implements OnInit, OnDestroy {
   valorinput2: string = '';
   userId: string = '';
   fecha: string = '';
+  nuevoEstado: string = ''
   private ventaSubscription: Subscription | undefined;
 
   constructor(
@@ -166,7 +167,11 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.VentaService.registrarVenta(this.userId, total, this.fecha).subscribe(
       (_) => {
         this.message.success('Venta registrada correctamente:');
-        this.desactivarProducto(this.idproducto)
+        //Cambiar el estado de activo despues realizar la venta
+        this.productosAgregados.forEach(producto => {
+          const nuevoEstado = producto.nuevoEstado || '';
+          this.updateActivo(producto.idproducto || '' , nuevoEstado)
+        });
         this.resetValores();
       },
       (error) => {
@@ -175,8 +180,8 @@ export class VentaComponent implements OnInit, OnDestroy {
     );
   }
 
-  desactivarProducto(idproducto: string){
-    this.productoServices.desactivarProducto(idproducto).subscribe(_=>{
+  updateActivo(idProducto: string, nuevoEstado: string){
+    this.productoServices.updateActivo(idProducto, nuevoEstado).subscribe(_=>{
     })
   }
 

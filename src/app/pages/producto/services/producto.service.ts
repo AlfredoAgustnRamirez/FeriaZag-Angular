@@ -17,12 +17,21 @@ export class ProductoService {
     return this.http.get<IProducto[]>(`${ENDPOINTS.api}producto/listar`)
   }
 
+  getProductoVendidos(): Observable<IProducto[]>{
+    return this.http.get<IProducto[]>(`${ENDPOINTS.api}producto/vendidos`)
+  }
+
   desactivarProducto(idProducto: string): Observable<IProducto>{
     return this.http.delete<IProducto>(`${ENDPOINTS.api}producto/desactivar/${idProducto}`)
   }
 
   activarProducto(idProducto: string): Observable<IProducto>{
     return this.http.delete<IProducto>(`${ENDPOINTS.api}producto/activar/${idProducto}`)
+  }
+  
+  updateActivo(idProducto: string, nuevoEstado: string): Observable<IProducto>{
+    const payload = { activo: nuevoEstado };
+    return this.http.put<IProducto>(`${ENDPOINTS.api}producto/activo/${idProducto}`, payload)
   }
 
 }

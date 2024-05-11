@@ -1,12 +1,12 @@
-<h1 class="listcategoria text-center">Listado de categorias</h1>
+<h1 class="listcategoria text-center mt-3">Listado de categorias</h1>
 
-<div class="flex justify-content-between p-5">
+<div class="flex justify-content-between">
     <input class="input" (keyup)="search()"  placeholder="Buscar categoria por nombre" [(ngModel)]="value" type="text" />
     <button class="button" (click)="openModal()" nz-button nzType="primary">Agregar</button>
 </div>
 
-<div class="table-container">
-    <nz-table class="responsive-table" #basicTable [nzData]="listOfData">
+<div class="table-container mt-3">
+    <nz-table class="responsive-table" #basicTable [nzData]="listOfData" [nzPageSize]="5" [nzShowPagination]="true">
         <thead>
           <tr>
             <th class="text-center">Nombre</th>

@@ -19,6 +19,8 @@ export const routes: Routes = [
       { path: 'categoria', loadChildren: () => import('./pages/categoria/categoria.routes').then(m => m.CATEGORIA_ROUTES) },
       //Rutas de venta
       { path: 'venta', loadChildren: () => import('./pages/venta/venta.routes').then(m => m.VENTA_ROUTES) },
+       //Rutas de ventas detalles
+       { path: 'ventas-detalles', loadChildren: () => import('./pages/ventas-detalles/ventas-detalles.routes').then(m => m.VENTASDETALLES_ROUTES) },
       //Rutas de usuario
       { path: 'usuario', loadChildren: () => import('./pages/usuario/usuario.routes').then(m => m.USUARIO_ROUTES) },
       //Rutas de usuario

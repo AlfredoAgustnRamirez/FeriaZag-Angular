@@ -22,7 +22,7 @@ export class VentaService {
   }
 
   registrarVenta(idUsuario: string, totalVenta: number, fecha: string) {
-    const body = {iduser: idUsuario, total_venta: totalVenta, fecha: fecha};
+    const body = { iduser: idUsuario, total_venta: totalVenta, fecha: fecha};
     return this.http.post<any>(`${ENDPOINTS.api}venta/register`, body);
   }
 

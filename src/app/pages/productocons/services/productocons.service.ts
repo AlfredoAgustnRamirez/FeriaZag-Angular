@@ -20,6 +20,10 @@ export class ProductoconsService {
     return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/${idconsignacion}`)
   }
 
+  getProductoVendidosPorConsignacion(idconsignacion: string): Observable<IProductocons[]>{
+    return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/vendidos/${idconsignacion}`)
+  }
+
   saveProducto(idconsignacion: string, payload: IProductocons): Observable<IProductocons>{
     return this.http.post<IProductocons>(`${ENDPOINTS.api}productocons/${idconsignacion}`, payload)
   }
