@@ -1,1 +1,45 @@
-<p>pago works!</p>
+
+<h1 class="codconsignacion text-center"> Hacer un pago</h1>
+
+    <div class="input-container">
+        <input class="input-codigo m-4" (keyup)="searchPorDescripcion()"  placeholder="Buscar producto por nombre" [(ngModel)]="valorinput1" type="text" />
+        <input class="input-codigo m-4" (keyup)="searchPorCodigo()"  placeholder="Buscar producto por codigo" [(ngModel)]="valorinput2" type="text" />
+        <button class="button" (click)="openModal()" nz-button nzType="primary">Pagar</button>    
+    </div>
+<div class="table-container">
+    <nz-table class="responsive-table" #productosVendidos [nzData]="productosVendidosTmp" [nzPageSize]="7" [nzShowPagination]="true">
+        <thead>
+          <tr>
+            <th class="text-center">Producto</th>
+            <th class="text-center">Categoria</th>
+            <th class="text-center">Codigo Producto</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Talle</th>
+            <th class="text-center">Precio</th>
+            <th class="text-center">Activo</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of productosVendidos.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.codconsignacion }}</td>
+                  <td class="text-center">{{ data.categoria }}</td>
+                  <td class="text-center">{{ data.codproducto }}</td>
+                  <td class="text-center">{{ data.descripcion }}</td>
+                  <td class="text-center">{{ data.talle }}</td>
+                  <td class="text-center">{{ data.precio }}</td>
+                  <td class="text-center">{{ data.activo }}</td>
+                </tr>
+            }
+        </tbody>
+    </nz-table>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idconsignacion? 'Editar categoria':'Realizar un pago'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <input class="mt-3" nz-input placeholder="idconsignacion" [(ngModel)]="form.idconsignacion" type="text" />
+        <input class="mt-3" nz-input placeholder="fecha" [(ngModel)]="form.fecha" type="text" />
+    </ng-container>
+</nz-modal>
+
+   
