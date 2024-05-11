@@ -13,6 +13,10 @@ export class ProductoService {
     private http: HttpClient
   ) { }
 
+  getTodosProductos(): Observable<IProducto[]>{
+    return this.http.get<IProducto[]>(`${ENDPOINTS.api}producto/todos`)
+  }
+
   getProducto(): Observable<IProducto[]>{
     return this.http.get<IProducto[]>(`${ENDPOINTS.api}producto/listar`)
   }
