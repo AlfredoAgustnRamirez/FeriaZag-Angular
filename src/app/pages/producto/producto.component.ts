@@ -72,7 +72,7 @@ export class ProductoComponent implements OnInit{
   ngOnInit(){
     this.obtenerProductosVendidos();
     this.obtenerProductos();
-    //this.obtenerTodosProductos();
+    this.obtenerTodosProductos();
   }
 
   openModal(){
@@ -139,13 +139,13 @@ export class ProductoComponent implements OnInit{
   searchPorDescripcion(){
       this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
       this.productosVendidosTmp = this.productosVendidos.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
-      //this.productosTmp = this.productos.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+      this.productos = this.productosTmp.filter((producto: IProducto)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
     }
   
   searchPorCodigo(){
     this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
     this.productosVendidosTmp = this.productosVendidos.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
-    //this.productosTmp = this.productos.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productos = this.productosTmp.filter((producto: IProducto)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
   }
 
 }

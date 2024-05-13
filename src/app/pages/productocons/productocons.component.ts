@@ -83,6 +83,7 @@ export class ProductoconsComponent implements OnInit{
     this.consignacionId = this.route.snapshot.paramMap.get('idconsignacion') || '';
     this.obtenerProductosPorConsignacion(this.consignacionId)
     this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
+    this.obtenerTodosProductosPorConsignacion(this.consignacionId)
     this.initForm()
     this.getCategoria()
   }
@@ -179,6 +180,18 @@ export class ProductoconsComponent implements OnInit{
   edit(data: IProductocons){
     this.form = data
     this.isVisible = true
+  }
+
+  obtenerTodosProductosPorConsignacion(consignacionId: string) {
+    this.productoconsServices.getTodosProductoPorConsignacion(this.consignacionId)
+      .subscribe(producto => {
+        this.productosTmp = producto;
+        this.productos = producto;
+        const productoSeleccionado = producto[0];
+        this.codigoConsignacion = productoSeleccionado.codconsignacion;
+        this.productosNoVendidos = producto;
+        this.productosNoVendidosTmp = producto; 
+      });
   }
 
   obtenerProductosPorConsignacion(consignacionId: string) {

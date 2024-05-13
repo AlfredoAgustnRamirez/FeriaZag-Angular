@@ -39,6 +39,9 @@ export class VentaComponent implements OnInit, OnDestroy {
   venta: IVenta[] = [];
   ventaTmp: IVenta[] = [];
   productosAgregados: IVenta[] = [];
+  productosAgregadoss: string[] = [];
+  productosEliminados: string[] = [];
+  productosDisponibles: IVenta[] = []
   listUsuario: IUsuario[] = [];
   isVisible: boolean = false;
   value: string = '';
@@ -46,7 +49,7 @@ export class VentaComponent implements OnInit, OnDestroy {
   totalVenta: string = '$ 0.00';
   precio: string = '';
   iduser: string = '';
-  idproducto: string = ''
+  idproducto: string = '';
   codconsignacion?: string = '';
   idcabecera?: string = '';
   codproducto: string = '';
@@ -54,7 +57,7 @@ export class VentaComponent implements OnInit, OnDestroy {
   valorinput2: string = '';
   userId: string = '';
   fecha: string = '';
-  nuevoEstado: string = ''
+  nuevoEstado: string = '';
   private ventaSubscription: Subscription | undefined;
 
   constructor(
@@ -94,8 +97,31 @@ export class VentaComponent implements OnInit, OnDestroy {
 
   agregarProducto(producto: IVenta) {
     this.productosAgregados.push(producto);
+     // Agregar el código del producto a la lista de productos agregados
+    this.productosAgregadoss.push(producto.codproducto);
     this.actualizarTotalVenta();
     this.limpiarBusqueda();
+  }
+
+  // Método para eliminar un producto de la venta
+  eliminarProducto(idproducto: string) {
+    // Inicializar totalVenta como número
+    let totalNumerico: number = 0;
+    this.productosAgregados = this.productosAgregados.filter(
+      (producto) => producto.idproducto !== idproducto
+    );
+
+    // Restar los precios de los productos en el array productosAgregados
+    this.totalVenta =
+      '$ ' +
+      this.productosAgregados
+        .reduce(
+          (total, producto) => total + parseFloat(producto.precio || '0'),
+          0
+        )
+        .toFixed(2);
+        // Volver a aplicar el filtro de búsqueda
+    this.searchPorCodigo();
   }
 
   actualizarTotalVenta() {
@@ -110,24 +136,6 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.totalVenta = '$ ' + totalNumerico.toFixed(2);
   }
 
-  // Método para eliminar un producto de la venta
-  eliminarProducto(idproducto: string) {
-    // Inicializar totalVenta como número
-    let totalNumerico: number = 0;
-    this.productosAgregados = this.productosAgregados.filter(
-      (producto) => producto.idproducto !== idproducto
-    );
-    // Restar los precios de los productos en el array productosAgregados
-    this.totalVenta =
-      '$ ' +
-      this.productosAgregados
-        .reduce(
-          (total, producto) => total + parseFloat(producto.precio || '0'),
-          0
-        )
-        .toFixed(2);
-  }
-
   searchPorDescripcion() {
     this.venta = this.ventaTmp.filter((producto: IVenta) =>
       producto.descripcion
@@ -140,7 +148,8 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.venta = this.ventaTmp.filter((producto: IVenta) =>
       producto.codproducto
         .toLocaleLowerCase()
-        .includes(this.valorinput2.toLocaleLowerCase())
+        .includes(this.valorinput2.toLocaleLowerCase()) &&
+        !this.productosAgregadoss.includes(producto.codproducto)
     );
   }
 
@@ -165,21 +174,28 @@ export class VentaComponent implements OnInit, OnDestroy {
     let totalString: string = this.totalVenta;
     let total: number = parseFloat(totalString.replace('$', ''));
 
-  // Crear el array de detalles
-  const detalles = this.productosAgregados.map(producto => ({
-    idproducto: producto.idproducto,
-    precio: producto.precio
-  }));
+    // Crear el array de detalles
+    const detalles = this.productosAgregados.map((producto) => ({
+      idproducto: producto.idproducto,
+      precio: producto.precio,
+    }));
 
-    this.VentaService.registrarVenta(this.userId, total, this.fecha, detalles).subscribe(
+    this.VentaService.registrarVenta(
+      this.userId,
+      total,
+      this.fecha,
+      detalles
+    ).subscribe(
       (_) => {
         this.message.success('Venta registrada correctamente:');
         //Cambiar el estado de activo despues realizar la venta
-        this.productosAgregados.forEach(producto => {
+        this.productosAgregados.forEach((producto) => {
           const nuevoEstado = producto.nuevoEstado || '';
-          this.updateActivo(producto.idproducto || '' , nuevoEstado)
+          this.updateActivo(producto.idproducto || '', nuevoEstado);
         });
         this.resetValores();
+        this.getProducto();
+        this.actualizarTotalVenta()
       },
       (error) => {
         this.message.success('Error al registrar la venta:', error);
@@ -187,9 +203,10 @@ export class VentaComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateActivo(idProducto: string, nuevoEstado: string){
-    this.productoServices.updateActivo(idProducto, nuevoEstado).subscribe(_=>{
-    })
+  updateActivo(idProducto: string, nuevoEstado: string) {
+    this.productoServices
+      .updateActivo(idProducto, nuevoEstado)
+      .subscribe((_) => {});
   }
 
   resetValores() {
