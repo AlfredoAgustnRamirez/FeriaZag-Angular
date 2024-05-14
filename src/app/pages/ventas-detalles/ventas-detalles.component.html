@@ -1,26 +1,26 @@
-<h1 class="titulo text-center">Listado de Ventas Detalles</h1>
+<h1 class="titulo text-center">Listado de Ventas</h1>
 
 <div class="table-container mt-4">
   <nz-table class="responsive-table" #ventasDetalle [nzData]="ventasDetalleTmp" [nzShowPagination]="true">      
     <thead>
-        <tr>
+        <tr>      
           <th class="text-center">IdCabecera</th>
-          <th class="text-center">IdProducto</th>
+          <th class="text-center">Fecha</th>
           <th class="text-center">CodProducto</th>
           <th class="text-center">Precio</th>
-          <th class="text-center">Fecha</th>
         </tr>
       </thead>
       <tbody class="align-item-center">
-        @for (data of ventasDetalle.data; track $index) {
-        <tr>
-          <td class="text-center">{{ data.idcabecera }}</td>
-          <td class="text-center">{{ data.idproducto }}</td>
-          <td class="text-center">{{ data.codproducto }}</td>
-          <td class="text-center">{{ data.precio }}</td>
-          <td class="text-center">{{ data.fecha }}</td>
-        </tr>
-        }
+          @for (data of ventasDetalle.data; track $index) {
+              <tr>
+                <td class="text-center">{{ data.idcabecera }}</td>                
+                <td class="text-center">{{ data.fecha }}</td>
+                <ng-container>
+                    <td class="text-center">{{ data.codproducto}}</td>
+                </ng-container>
+                
+                <td class="text-center">{{'$'}}{{ data.precio }}</td>
+              }
       </tbody>
     </nz-table>
   </div>

@@ -40,35 +40,11 @@ export class MainComponent {
   ){}
 
   ngOnInit() {
-    this.obtenerProductos()
   }
 
   logout(){
     localStorage.removeItem(SESSION.localStorage)
     this.router.navigate(['/'])
-  }
-  
-  obtenerProductos(){
-    this.productoService.getProducto().subscribe((productos: IProducto[]) => {
-      this.productos = productos;
-      this.productosTmp = productos;
-    });
-  }
-
-  getConsignacion(){
-    this.consignacionServices.getConsignacion().subscribe((consignacion: IConsignacion[])=>{
-      this.consignacion = consignacion
-      this.consignacionTmp = consignacion
-    });
-  }
-
-  obtenerProductosPorConsignacion(consignacionId: string) {
-    this.productoconsService.getProductoPorConsignacion(this.consignacionId)
-      .subscribe(producto => {
-        this.productosTmp = producto;
-        this.productos = producto;
-        const productoSeleccionado = producto[0];
-      });
   }
 
 }

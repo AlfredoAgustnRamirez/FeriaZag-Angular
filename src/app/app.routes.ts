@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './core/layout/main/main.component';
+import { authGuard } from './core/auth/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/auth' },
@@ -28,7 +29,6 @@ export const routes: Routes = [
       //Rutas de pago
       { path: 'pago', loadChildren: () => import('./pages/pago/pago.routes').then(m => m.PAGO_ROUTES) },
     ]
-
     },
   { path: 'auth', loadComponent: () => import('./core/auth/components/auth/auth.component').then(m => m.AuthComponent) },
  

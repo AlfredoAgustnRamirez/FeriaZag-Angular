@@ -12,42 +12,6 @@
 
   <div class="table-container">
   @if(opcionSeleccionada === 'vendidos'){
-    <nz-table class="responsive-table" #productosNoVendidos [nzData]="productosNoVendidosTmp" [nzPageSize]="5" [nzShowPagination]="true">
-        <thead>
-          <tr>
-            <th class="text-center">Codigo</th>
-            <th class="text-center">Categoria</th>
-            <th class="text-center">Descripcion</th>
-            <th class="text-center">Talle</th>
-            <th class="text-center">Precio</th>
-            <th class="text-center">Activo</th>
-            <th class="text-center">Accion</th>
-          </tr>
-        </thead>
-        <tbody class="align-item-center">
-            @for (data of productosNoVendidos.data; track $index) {
-                <tr>
-                  <td class="text-center">{{ data.codproducto }}</td>
-                  <td class="text-center">{{ data.categoria }}</td>
-                  <td class="text-center">{{ data.descripcion }}</td>
-                  <td class="text-center">{{ data.talle }}</td>
-                  <td class="text-center">{{ data.precio }}</td>
-                  <td class="text-center">{{ data.activo }}</td>
-                <td>
-                    <button class="nz-button" nz-popconfirm
-                    nzPopconfirmTitle="Estas seguro que desea desactivar el producto?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="desactivarProducto(data.idproducto || '')"
-                     nz-button nzType="primary">
-                        desactivar
-                    </button>
-                </td>
-                </tr>
-            }
-        </tbody>
-    </nz-table> 
-  }@else if (opcionSeleccionada === 'no_vendidos') {
-    <div class="table-container">
     <nz-table class="responsive-table" #productosVendidos [nzData]="productosVendidosTmp" [nzPageSize]="5" [nzShowPagination]="true">
         <thead>
           <tr>
@@ -67,16 +31,72 @@
                   <td class="text-center">{{ data.categoria }}</td>
                   <td class="text-center">{{ data.descripcion }}</td>
                   <td class="text-center">{{ data.talle }}</td>
-                  <td class="text-center">{{ data.precio }}</td>
+                  <td class="text-center">{{'$'}}{{ data.precio }}</td>
                   <td class="text-center">{{ data.activo }}</td>
                 <td>
-                    <button class="nz-button" nz-popconfirm
+                  @if(data.activo === 'Si'){
+                    <button class="nz-button-desactivar" nz-popconfirm
+                    nzPopconfirmTitle="Estas seguro que desea desactivar el producto?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="desactivarProducto(data.idproducto || '')"
+                     nz-button nzType="primary">
+                        desactivar
+                    </button>
+                  }@else {
+                    <button class="nz-button-activar" nz-popconfirm
                     nzPopconfirmTitle="Estas seguro que desea activar el producto?"
                     nzPopconfirmPlacement="bottom"
                     (nzOnConfirm)="activarProducto(data.idproducto || '')"
                      nz-button nzType="primary">
-                        Activar
+                        activar
                     </button>
+                  }
+                </td>
+                </tr>
+            }
+        </tbody>
+    </nz-table> 
+  }@else if (opcionSeleccionada === 'no_vendidos') {
+    <div class="table-container">
+    <nz-table class="responsive-table" #productosNoVendidos [nzData]="productosNoVendidosTmp" [nzPageSize]="5" [nzShowPagination]="true">
+        <thead>
+          <tr>
+            <th class="text-center">Codigo</th>
+            <th class="text-center">Categoria</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Talle</th>
+            <th class="text-center">Precio</th>
+            <th class="text-center">Activo</th>
+            <th class="text-center">Accion</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of productosNoVendidos.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.codproducto }}</td>
+                  <td class="text-center">{{ data.categoria }}</td>
+                  <td class="text-center">{{ data.descripcion }}</td>
+                  <td class="text-center">{{ data.talle }}</td>
+                  <td class="text-center">{{'$'}}{{ data.precio }}</td>
+                  <td class="text-center">{{ data.activo }}</td>
+                <td>
+                  @if(data.activo === 'Si'){
+                    <button class="nz-button-desactivar" nz-popconfirm
+                    nzPopconfirmTitle="Estas seguro que desea desactivar el producto?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="desactivarProducto(data.idproducto || '')"
+                     nz-button nzType="primary">
+                        desactivar
+                    </button>
+                  }@else {
+                    <button class="nz-button-activar" nz-popconfirm
+                    nzPopconfirmTitle="Estas seguro que desea activar el producto?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="activarProducto(data.idproducto || '')"
+                     nz-button nzType="primary">
+                        activar
+                    </button>
+                  }
                 </td>
                 </tr>
             }
@@ -104,16 +124,26 @@
                     <td class="text-center">{{ data.categoria }}</td>
                     <td class="text-center">{{ data.descripcion }}</td>
                     <td class="text-center">{{ data.talle }}</td>
-                    <td class="text-center">{{ data.precio }}</td>
+                    <td class="text-center">{{'$'}}{{ data.precio }}</td>
                     <td class="text-center">{{ data.activo }}</td>
                   <td>
-                      <button class="nz-button" nz-popconfirm
+                    @if(data.activo === 'Si'){
+                      <button class="nz-button-desactivar" nz-popconfirm
                       nzPopconfirmTitle="Estas seguro que desea desactivar el producto?"
                       nzPopconfirmPlacement="bottom"
                       (nzOnConfirm)="desactivarProducto(data.idproducto || '')"
                        nz-button nzType="primary">
                           desactivar
                       </button>
+                    }@else {
+                      <button class="nz-button-activar" nz-popconfirm
+                      nzPopconfirmTitle="Estas seguro que desea activar el producto?"
+                      nzPopconfirmPlacement="bottom"
+                      (nzOnConfirm)="activarProducto(data.idproducto || '')"
+                       nz-button nzType="primary">
+                          activar
+                      </button>
+                    }
                   </td>
                   </tr>
               }

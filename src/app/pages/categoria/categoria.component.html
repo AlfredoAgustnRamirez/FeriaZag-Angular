@@ -12,8 +12,7 @@
             <th class="text-center">Nombre</th>
             <th class="text-center">Activo</th>
             <th class="text-center">Editar</th>
-            <th class="text-center">Desactivar</th>
-            <th class="text-center">Activar</th>
+            <th class="text-center">Accion</th>
           </tr>
         </thead>
         <tbody class="align-item-center">
@@ -28,22 +27,24 @@
                     </button>
                 </td>
                 <td>
-                <button class="nz-button" nz-popconfirm
+                    @if(data.activo === 'Si'){
+                        <button class="nz-button-desactivar" nz-popconfirm
                     nzPopconfirmTitle="Estas seguro que desea desactivar la categoria?"
                     nzPopconfirmPlacement="bottom"
                     (nzOnConfirm)="desactivarCategoria(data.idcategoria || '')"
                      nz-button nzType="primary">
                         desactivar
                     </button>
-                </td>
-                <td>
-                    <button class="nz-button" nz-popconfirm
+                    }@else {
+                        <button class="nz-button-activar" nz-popconfirm
                     nzPopconfirmTitle="Estas seguro que desea activar la categoria?"
                     nzPopconfirmPlacement="bottom"
                     (nzOnConfirm)="activarCategoria(data.idcategoria || '')"
                      nz-button nzType="primary">
                         activar
                     </button>
+                    }
+                    
                 </td>
                 </tr>
             }

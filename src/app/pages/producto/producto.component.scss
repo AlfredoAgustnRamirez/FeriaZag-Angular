@@ -33,11 +33,22 @@
   color: rgb(197, 107, 152);
 }
 
-.nz-button {
+.nz-button-activar {
   left: 50%;
   bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
   transform: translateX(-50%);
-  background-color: #c977bb;
+  background-color: #1bc941;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nz-button-desactivar {
+  left: 50%;
+  bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+  transform: translateX(-50%);
+  background-color: #9e1212;
   color: #fff;
   border: none;
   border-radius: 5px;

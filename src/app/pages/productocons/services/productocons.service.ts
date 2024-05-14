@@ -16,9 +16,7 @@ export class ProductoconsService {
     private http: HttpClient
   ) { }
 
-  getTodosProductoPorConsignacion(idconsignacion: string): Observable<IProductocons[]>{
-    return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/todos/${idconsignacion}`)
-  }
+  
 
   getProductoPorConsignacion(idconsignacion: string): Observable<IProductocons[]>{
     return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/${idconsignacion}`)
@@ -26,6 +24,10 @@ export class ProductoconsService {
 
   getProductoVendidosPorConsignacion(idconsignacion: string): Observable<IProductocons[]>{
     return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/vendidos/${idconsignacion}`)
+  }
+
+  getTodosProductoPorConsignacion(idconsignacion: string): Observable<IProductocons[]>{
+    return this.http.get<IProductocons[]>(`${ENDPOINTS.api}productocons/todos/${idconsignacion}`)
   }
 
   saveProducto(idconsignacion: string, payload: IProductocons): Observable<IProductocons>{

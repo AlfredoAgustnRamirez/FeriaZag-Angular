@@ -89,15 +89,15 @@ export class ProductoComponent implements OnInit{
 
   obtenerProductosVendidos() {
     this.productoServices.getProductoVendidos().subscribe(productos => {
-      this.productosVendidos = productos;
-      this.productosVendidosTmp = productos;
+      this.productosNoVendidos = productos;
+      this.productosNoVendidosTmp = productos;
     });
   }
 
   obtenerProductos(){
     this.productoServices.getProducto().subscribe(productos => {
-      this.productosNoVendidos = productos;
-      this.productosNoVendidosTmp = productos;      
+      this.productosVendidos = productos;
+      this.productosVendidosTmp = productos;      
     });
   }
 
@@ -125,6 +125,7 @@ export class ProductoComponent implements OnInit{
       this.message.success('Producto desactivado')
       this.obtenerProductos()
       this.obtenerProductosVendidos()
+      this.obtenerTodosProductos()
     })
   }
 
@@ -133,6 +134,7 @@ export class ProductoComponent implements OnInit{
       this.message.success('Producto activado')
       this.obtenerProductosVendidos()
       this.obtenerProductos()
+      this.obtenerTodosProductos()
     })
   }
 

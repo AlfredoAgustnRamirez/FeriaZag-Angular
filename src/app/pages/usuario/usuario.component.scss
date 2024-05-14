@@ -25,6 +25,29 @@
   cursor: pointer;
 }
 
+.nz-button-activar {
+  left: 50%;
+  bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+  transform: translateX(-50%);
+  background-color: #0d972b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nz-button-desactivar {
+  left: 50%;
+  bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+  transform: translateX(-50%);
+  background-color: #d41111;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
 .nz-button:hover {
   background-color: #cf77a0;
 }

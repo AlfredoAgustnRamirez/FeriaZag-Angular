@@ -144,6 +144,7 @@ export class ProductoconsComponent implements OnInit{
       this.message.success('Producto desactivado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
       this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
+      this.obtenerTodosProductosPorConsignacion(this.consignacionId)
     })
   }
 
@@ -152,17 +153,20 @@ export class ProductoconsComponent implements OnInit{
       this.message.success('Producto activado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
       this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
+      this.obtenerTodosProductosPorConsignacion(this.consignacionId)
     })
   }
 
   searchPorDescripcion(){
     this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
     this.productosVendidosTmp = this.productosVendidos.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
+    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.descripcion.toLocaleLowerCase().indexOf(this.valorinput1.toLocaleLowerCase()) > - 1) 
   }
   
   searchPorCodigo(){
     this.productosNoVendidosTmp = this.productosNoVendidos.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
     this.productosVendidosTmp = this.productosVendidos.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
+    this.productos = this.productosTmp.filter((producto: IProductocons)=> producto.codproducto.toLocaleLowerCase().indexOf(this.valorinput2.toLocaleLowerCase()) > - 1) 
   }
   
   // Método para manejar el cambio en el select
@@ -185,36 +189,30 @@ export class ProductoconsComponent implements OnInit{
   obtenerTodosProductosPorConsignacion(consignacionId: string) {
     this.productoconsServices.getTodosProductoPorConsignacion(this.consignacionId)
       .subscribe(producto => {
-        this.productosTmp = producto;
-        this.productos = producto;
         const productoSeleccionado = producto[0];
         this.codigoConsignacion = productoSeleccionado.codconsignacion;
-        this.productosNoVendidos = producto;
-        this.productosNoVendidosTmp = producto; 
+        this.productosTmp = producto;
+        this.productos = producto;
       });
   }
 
   obtenerProductosPorConsignacion(consignacionId: string) {
     this.productoconsServices.getProductoPorConsignacion(this.consignacionId)
       .subscribe(producto => {
-        this.productosTmp = producto;
-        this.productos = producto;
         const productoSeleccionado = producto[0];
         this.codigoConsignacion = productoSeleccionado.codconsignacion;
-        this.productosNoVendidos = producto;
-        this.productosNoVendidosTmp = producto; 
+        this.productosVendidos = producto;
+        this.productosVendidosTmp = producto; 
       });
   }
 
   obtenerProductosVendidosPorConsignacion(consignacionId: string) {
     this.productoconsServices.getProductoVendidosPorConsignacion(this.consignacionId)
       .subscribe(producto => {
-        this.productosTmp = producto;
-        this.productos = producto;
         const productoSeleccionado = producto[0];
         this.codigoConsignacion = productoSeleccionado.codconsignacion;
-        this.productosVendidos = producto;
-        this.productosVendidosTmp = producto; 
+        this.productosNoVendidos = producto;
+        this.productosNoVendidosTmp = producto; 
       });
   }
 
