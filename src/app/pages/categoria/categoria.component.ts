@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core'
 import { CategoriaService } from './services/categoria.service';
 import { ICategoria } from './interfaces/categoria.interface';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageService, NzMessageModule } from 'ng-zorro-antd/message';
-import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule} from '@angular/router';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categoria',
   standalone: true,
   imports: [
+    CommonModule,
     NzInputModule,
     FormsModule,
+    ReactiveFormsModule,
     NzButtonModule,
     NzTableModule,
     NzModalModule,
@@ -26,33 +29,36 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'
 })
-export class CategoriaComponent {
+export class CategoriaComponent implements OnInit{
   listOfData: ICategoria[] = []
   listOfDataTmp: ICategoria[] = []
-  form!: ICategoria 
+  form!: FormGroup 
   isVisible: boolean = false
   value: string = ''
   idcategoria: string = ''
+  categoriaId?: string = ''
   nombre: string = ''
   activo: string = ''
-  actionBtn: boolean = false
+  init: boolean = false
 
   constructor(
     private categoriaServices: CategoriaService,
     private message: NzMessageService,
-    
-  ){ }
-
-  ngOnInit(){
-    this.getCategoria()
+    private fb: FormBuilder
+  ){ 
     this.initForm()
   }
 
+  ngOnInit(){
+    this.getCategoria()
+  }
+
   initForm(){
-    this.form = {
-      nombre: '',
-      activo: ''
-    }
+    this.form = this.fb.group({
+      idcategoria: new FormControl(''),
+      nombre: new FormControl('',[Validators.required],),
+      activo: new FormControl('Si',[Validators.required]),
+    })
   }
 
   openModal(){
@@ -65,12 +71,16 @@ export class CategoriaComponent {
   }
 
   handleOk(){
-    if(this.form.idcategoria){
-      this.update()
-    }else{
-      this.createCategoria()
+    this.init = true
+    if(this.form.valid){
+        if(this.categoriaId){
+          this.update()
+       }else{
+          this.createCategoria()
     }
     this.isVisible = false
+    }
+   
   }
 
   getCategoria(){
@@ -81,11 +91,11 @@ export class CategoriaComponent {
   }
 
   createCategoria(){
-      this.categoriaServices.saveCategoria(this.form).subscribe(_=>{
+      this.categoriaServices.saveCategoria(this.form.value).subscribe(_=>{
       this.message.success('Categoria guardado')
       this.getCategoria()
       this.initForm()   
-    })
+    });
   }
 
   activarCategoria(idcategoria: string){
@@ -107,14 +117,28 @@ export class CategoriaComponent {
   }
 
   update(){
-    this.categoriaServices.updateCategoria(this.form).subscribe(_=>{
+    this.categoriaServices.updateCategoria(this.form.value).subscribe(_=>{
       this.message.success('Categoria actualizado')
+      this.getCategoria()
+      this.initForm()
     })
   }
 
   edit(data: ICategoria){
-    this.form = data
+    this.categoriaId = data.idcategoria
+    this.form.patchValue(data) 
     this.isVisible = true
   }
 
+  get Nombre(){
+    return this.form.get('nombre')
+  }
+
+  get Activo(){
+    return this.form.get('activo')
+  }
+
+  get CategoriaID(){
+    return this.form.get('idcategoria')
+  }
 }

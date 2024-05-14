@@ -52,9 +52,17 @@
     </nz-table>
 </div>
 
-<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idcategoria?'Editar categoria':'Agregar categoria'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<form [formGroup]="form">
+    <nz-modal [(nzVisible)]="isVisible"  [nzTitle]="CategoriaID?.value?'Editar Categoria':'Agregar Categoria'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
-        <input class="mt-3" nz-input placeholder="nombre" [(ngModel)]="form.nombre" type="text" />
-        <input class="mt-3" nz-input placeholder="Activo" [(ngModel)]="form.activo" type="text" />
+        <input [nzStatus]="(Nombre?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Nombre" formControlName="nombre" type="text" />
+        @if(this.form.get('nombre')?.errors && init){
+            <small class="error-text">Debes ingresar un nombre</small>
+        }   
+        <input [nzStatus]="(Activo?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Activo" formControlName="activo" type="text" />
+        @if(this.form.get('activo')?.errors && init){
+            <small class="error-text">Debes ingresar activo</small>
+        }  
     </ng-container>
 </nz-modal>
+</form>

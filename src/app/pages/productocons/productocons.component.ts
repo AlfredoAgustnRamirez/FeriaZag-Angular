@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -15,13 +15,16 @@ import { CategoriaService } from '../categoria/services/categoria.service';
 import { ICategoria } from '../categoria/interfaces/categoria.interface';
 import { IProducto } from '../producto/interfaces/producto.interface';
 import { ProductoService } from '../producto/services/producto.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-productocons',
   standalone: true,
   imports: [
+    CommonModule,
     NzInputModule,
     FormsModule,
+    ReactiveFormsModule,
     NzButtonModule,
     NzTableModule,
     NzModalModule,
@@ -43,7 +46,7 @@ export class ProductoconsComponent implements OnInit{
   productosNoVendidos: IProducto[] = []
   productosVendidosTmp: IProducto[] = []
   productosNoVendidosTmp: IProducto[] = []
-  form!: IProductocons
+  form!: FormGroup
   isVisible: boolean = false
   descripcion: string = ''
   idcategoria: string = ''
@@ -55,16 +58,18 @@ export class ProductoconsComponent implements OnInit{
   consignacionId: string = ''
   nombre: string = ''
   codproducto: string = ''
+  idproducto: string = ''
+  productoId: string = ''
   title?: string = ''
   codigoConsignacion?: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
   opcionSeleccionada: string = '';
+  init: boolean = false
 
   constructor(
     private productoconsServices: ProductoconsService,
     private listcategoriaService: CategoriaService,
-    private productoServices: ProductoService,
     private message: NzMessageService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -77,6 +82,7 @@ export class ProductoconsComponent implements OnInit{
     // Inicializa venta con los datos originales al inicio
     this.productos = this.productosTmp;
     // Obtener el ID del usuario al inicializar el componente
+    this.initForm()
   }
 
   ngOnInit(){
@@ -84,19 +90,19 @@ export class ProductoconsComponent implements OnInit{
     this.obtenerProductosPorConsignacion(this.consignacionId)
     this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
     this.obtenerTodosProductosPorConsignacion(this.consignacionId)
-    this.initForm()
     this.getCategoria()
   }
 
    initForm(){
-    this.form = {
-      codproducto: '',
-      idcategoria: '',
-      descripcion: '',
-      talle: '',
-      precio: '',
-      activo: ''
-    }
+    this.form = this.fb.group ({
+      idproducto: new FormControl(''),
+      codproducto: new FormControl(''),
+      idcategoria: new FormControl('',[Validators.required]),
+      descripcion: new FormControl('',[Validators.required]),
+      talle: new FormControl('',[Validators.required]),
+      precio: new FormControl('',[Validators.required]),
+      activo: new FormControl('Si',[Validators.required])
+    })
   }
 
    getCategoria(){
@@ -115,18 +121,24 @@ export class ProductoconsComponent implements OnInit{
   }
 
   handleOk(){
-    if(this.form.idproducto){
-      this.update()
-    }else{
-      this.createProducto()
-    }
-    this.isVisible = false
+    this.init = true
+    if(this.form.valid){
+      if(this.productoId){
+        this.update()
+     }else{
+        this.createProducto()
   }
+  this.isVisible = false
+  }
+}
+  
 
   createProducto(){
-      this.productoconsServices.saveProducto(this.consignacionId, this.form).subscribe(_=>{
+      this.productoconsServices.saveProducto(this.consignacionId, this.form.value).subscribe(_=>{
       this.message.success('Producto creado')
       this.obtenerProductosPorConsignacion(this.consignacionId)
+      this.obtenerTodosProductosPorConsignacion(this.consignacionId)
+      this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
       this.initForm() 
       this.reset()
     });
@@ -176,13 +188,18 @@ export class ProductoconsComponent implements OnInit{
 
 
   update(){
-    this.productoconsServices.updateProducto(this.form).subscribe(_=>{
+    this.productoconsServices.updateProducto(this.form.value).subscribe(_=>{
       this.message.success('Producto actualizado')
     })
+    this.obtenerProductosPorConsignacion(this.consignacionId)
+    this.obtenerTodosProductosPorConsignacion(this.consignacionId)
+    this.obtenerProductosVendidosPorConsignacion(this.consignacionId)
+    this.initForm()
   }
 
   edit(data: IProductocons){
-    this.form = data
+    this.productoId = this.idproducto
+    this.form.patchValue(data)
     this.isVisible = true
   }
 
@@ -214,6 +231,30 @@ export class ProductoconsComponent implements OnInit{
         this.productosNoVendidos = producto;
         this.productosNoVendidosTmp = producto; 
       });
+  }
+
+  get ProductoID(){
+    return this.form.get('idproducto')
+  }
+
+  get Descripcion(){
+    return this.form.get('descripcion')
+  }
+
+  get Talle(){
+    return this.form.get('talle')
+  }
+
+  get Precio(){
+    return this.form.get('precio')
+  }
+
+  get Activo(){
+    return this.form.get('activo')
+  }
+
+  get CategoriaID(){
+    return this.form.get('idcategoria')
   }
 
 }

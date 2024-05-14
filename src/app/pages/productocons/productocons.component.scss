@@ -30,6 +30,21 @@
   margin-top: 25px;
 }
 
+.nz-button {
+  left: 50%;
+  bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */
+  transform: translateX(-50%);
+  background-color: #ee69d8;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error-text{
+  color: #d10f0f;
+}
+
 .nz-button-activar {
   left: 50%;
   bottom: 1px; /* Ajusta la distancia del botón desde abajo según sea necesario */

@@ -185,17 +185,33 @@
                 </div>
             }
 
-
-<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.idproducto?'Editar producto':'Agregar producto'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<form [formGroup]="form">
+<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="ProductoID?.value?'Editar producto':'Agregar producto'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent> 
-        <nz-select nzPlaceHolder="Lista de categoria" class="w-full" [(ngModel)]="form.idcategoria">
+        <nz-select [nzStatus]="(CategoriaID?.errors && init)?'error' : ''" nzPlaceHolder="Lista de categoria" class="w-full" formControlName="idcategoria">
             @for(items of listCategoria; track $index){
                 <nz-option [nzValue]="items.idcategoria" [nzLabel]="items.nombre"></nz-option>
             }
         </nz-select> 
-        <input class="mt-3" nz-input placeholder="Descripcion" [(ngModel)]="form.descripcion" type="text" />
-        <input class="mt-3" nz-input placeholder="Talle" [(ngModel)]="form.talle" type="text" />
-        <input class="mt-3" nz-input placeholder="Precio" [(ngModel)]="form.precio" type="text" />
-        <input class="mt-3" nz-input placeholder="Activo" [(ngModel)]="form.activo" type="text" />
-        </ng-container>
+        @if(this.form.get('idcategoria')?.errors && init){
+            <small class="error-text">Debes ingresar una categoria</small>
+        }  
+        <input [nzStatus]="(Descripcion?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Descripcion" formControlName="descripcion" type="text" />
+        @if(this.form.get('descripcion')?.errors && init){
+            <small class="error-text">Debes ingresar una descripcion</small>
+        }   
+        <input [nzStatus]="(Talle?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Talle" formControlName="talle" type="text" />
+        @if(this.form.get('talle')?.errors && init){
+            <small class="error-text">Debes ingresar un talle</small>
+        }  
+        <input [nzStatus]="(Precio?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Precio" formControlName="precio" type="text" />
+        @if(this.form.get('precio')?.errors && init){
+            <small class="error-text">Debes ingresar un precio</small>
+        }  
+        <input [nzStatus]="(Activo?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Activo" formControlName="activo" type="text" />
+        @if(this.form.get('activo')?.errors && init){
+            <small class="error-text">Debes ingresar activo</small>
+        }  
+    </ng-container>
 </nz-modal>
+</form>

@@ -2,21 +2,24 @@ import { Component, OnInit } from '@angular/core'
 import { UsuarioService } from './services/usuario.service';
 import { IUsuario } from './interfaces/usuario.interface';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario',
   standalone: true,
   imports: [
+    CommonModule,
     NzInputModule,
     FormsModule,
+    ReactiveFormsModule,
     NzButtonModule,
     NzTableModule,
     NzModalModule,
@@ -31,7 +34,7 @@ export class UsuarioComponent {
 
   listOfData: IUsuario[] = []
   listOfDataTmp: IUsuario[] = []
-  form!: IUsuario
+  form!: FormGroup
   isVisible: boolean = false
   value: string = ''
   nombre: string = ''
@@ -42,28 +45,33 @@ export class UsuarioComponent {
   iduser: string = ''
   password: string = ''
   userId: string | null = null
+  init: boolean = false
+  UsuarioId: string = ''
 
   constructor(
     private UsuarioService: UsuarioService,
     private message: NzMessageService,
-    
-  ){}
+    private fb: FormBuilder
+  ){
+    this.initForm()
+  }
 
   ngOnInit(){
     this.getUsuario()
     this.userId = this.UsuarioService.getUserId();
-    this.initForm()
   }
 
   initForm(){
-    this.form = {
-      listId: '',
-      nombre: '',
-      apellido: '',
-      email: '',
-      usuario: '',
-      activo: ''
-    }
+    this.form = this.fb.group ({
+      listId: new FormControl(''),
+      iduser: new FormControl(''),
+      nombre: new FormControl('', [Validators.required]),
+      apellido: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      usuario: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      activo: new FormControl('Si', [Validators.required])
+    })
   }
 
   openModal(){
@@ -76,12 +84,16 @@ export class UsuarioComponent {
   }
 
   handleOk(){
-    if(this.form.iduser){
+    this.init = true
+    if(this.UsuarioId){
+      if(this.form.valid){
       this.update()
     }else{
       this.createUsuario()
     }
     this.isVisible = false
+    }
+    
   }
 
   getUsuario(){
@@ -92,9 +104,10 @@ export class UsuarioComponent {
   }
 
   createUsuario(){
-      this.UsuarioService.saveUsuario(this.form).subscribe(_=>{
+      this.UsuarioService.saveUsuario(this.form.value).subscribe(_=>{
       this.message.success('Usuario guardado')
       this.getUsuario()
+      this.initForm()
     })
   }
 
@@ -117,15 +130,44 @@ export class UsuarioComponent {
   }
 
   update(){
-    this.UsuarioService.updateUsuario(this.form).subscribe(_=>{
+    this.UsuarioService.updateUsuario(this.form.value).subscribe(_=>{
       this.message.success('Usuario actualizado')
     })
+    this.getUsuario()
+    this.initForm()
   }
 
   edit(data: IUsuario){
-    this.form = data
+    this.UsuarioId = this.iduser
+    this.form.patchValue(data)
     this.isVisible = true
   }
   
+  get Nombre(){
+    return this.form.get('nombre')
+  }
 
+  get Apellido(){
+    return this.form.get('apellido')
+  }
+
+  get Email(){
+    return this.form.get('email')
+  }
+
+  get Usuario(){
+    return this.form.get('usuario')
+  }
+
+  get Password(){
+    return this.form.get('password')
+  }
+
+  get Activo(){
+    return this.form.get('activo')
+  }
+
+  get UserID(){
+    return this.form.get('iduser')
+  }
 }

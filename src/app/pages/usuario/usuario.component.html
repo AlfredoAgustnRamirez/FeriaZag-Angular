@@ -9,7 +9,6 @@
     <nz-table class="responsive-table" #basicTable [nzData]="listOfData">
         <thead>
           <tr>
-            <th class="text-center">ID</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Apellido</th>
             <th class="text-center">Email</th>
@@ -22,7 +21,6 @@
         <tbody class="align-item-center">
             @for (data of basicTable.data; track $index) {
                 <tr>
-                    <td class="text-center">{{ data.iduser}}</td>
                   <td class="text-center">{{ data.nombre }}</td>
                   <td class="text-center">{{ data.apellido }}</td>
                   <td class="text-center">{{ data.email }}</td>
@@ -60,12 +58,33 @@
     </nz-table>
 </div>
 
-<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="form.iduser?'Editar usuario':'Agregar usuario'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<form [formGroup]="form">
+<nz-modal [(nzVisible)]="isVisible"  [nzTitle]="UserID?.value? 'Editar usuario':'Agregar usuario'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
-        <input class="mt-3" nz-input placeholder="Nombre" [(ngModel)]="form.nombre" type="text" />
-        <input class="mt-3" nz-input placeholder="Apellido" [(ngModel)]="form.apellido" type="text" />
-        <input class="mt-3" nz-input placeholder="Email" [(ngModel)]="form.email" type="text" />
-        <input class="mt-3" nz-input placeholder="Usuario" [(ngModel)]="form.usuario" type="text" />
-        <input class="mt-3" nz-input placeholder="Activo" [(ngModel)]="form.activo" type="text" />
+        <input [nzStatus]="(Nombre?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Nombre" formControlName="nombre" type="text" />
+        @if(this.form.get('nombre')?.errors && init){
+            <small class="error-text">Debes ingresar un nombre</small>
+        }  
+        <input [nzStatus]="(Apellido?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Apellido" formControlName="apellido" type="text" />
+        @if(this.form.get('apellido')?.errors && init){
+            <small class="error-text">Debes ingresar un apellido</small>
+        }  
+        <input [nzStatus]="(Email?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Email" formControlName="email" type="text" />
+        @if(this.form.get('email')?.errors && init){
+            <small class="error-text">Debes ingresar un email</small>
+        }  
+        <input [nzStatus]="(Usuario?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Usuario" formControlName="usuario" type="text" />
+        @if(this.form.get('usuario')?.errors && init){
+            <small class="error-text">Debes ingresar un usuario</small>
+        }  
+        <input [nzStatus]="(Password?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Password" formControlName="password" type="text" />
+        @if(this.form.get('password')?.errors && init){
+            <small class="error-text">Debes ingresar un password</small>
+        }  
+        <input [nzStatus]="(Activo?.errors && init)?'error' : ''" class="mt-3" nz-input placeholder="Activo" formControlName="activo" type="text" />
+        @if(this.form.get('activo')?.errors && init){
+            <small class="error-text">Debes ingresar activo</small>
+        }  
     </ng-container>
 </nz-modal>
+</form>
