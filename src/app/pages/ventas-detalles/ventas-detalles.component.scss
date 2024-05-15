@@ -20,6 +20,33 @@
   height: 2px; /* Altura de las filas */
 }
 
+.select {
+  background-color: #e2aed9;
+  height: 37px;
+  width: auto;
+  margin-top: 25px;
+  padding-left: 20px;
+}
+
+
+.button {
+  display: flex;
+  background-color: #ee99bd;
+  border: 1px solid #d682b1;
+  width: auto;
+  margin-left: 30px;
+  margin-top: auto;
+  color: #b15a8b;
+}
+
+.container {
+  display: flex;
+  align-items: center; /* Alinear elementos verticalmente */
+}
+
+.container input[type="text"] {
+  margin-right: 10px; /* Espacio entre el input y el botón */
+}
 
   /* Media query para ajustar el tamaño de las celdas en dispositivos pequeños */
   @media (max-width: 600px) {

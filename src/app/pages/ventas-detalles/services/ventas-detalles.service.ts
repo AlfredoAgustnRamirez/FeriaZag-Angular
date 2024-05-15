@@ -17,4 +17,16 @@ export class VentasDetallesService {
     return this.http.get<IVentasDetalles[]>(`${ENDPOINTS.api}ventaDetalle/listar`)
   }
 
+  getVentaDetalleDia(): Observable<IVentasDetalles[]>{
+    return this.http.get<IVentasDetalles[]>(`${ENDPOINTS.api}ventaDetalle/listar/ventaDia`)
+  }
+
+  getVentaDetalleSemana(): Observable<IVentasDetalles[]>{
+    return this.http.get<IVentasDetalles[]>(`${ENDPOINTS.api}ventaDetalle/listar/ventaSemana`)
+  }
+
+  getVentaDetalleMes(): Observable<IVentasDetalles[]>{
+    return this.http.get<IVentasDetalles[]>(`${ENDPOINTS.api}ventaDetalle/listar/ventaMes`)
+  }
+
 }

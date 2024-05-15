@@ -4,5 +4,6 @@ export interface IVentasDetalles{
     idproducto?: string
     precio?: string 
     codproducto?: string
+    descripcion?: string
     fecha?: string
 }

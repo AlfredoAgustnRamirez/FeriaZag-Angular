@@ -1,26 +1,103 @@
 <h1 class="titulo text-center">Listado de Ventas</h1>
 
+<div class="container">
+  <select class="select" (change)="onSelectChange($event)">
+    <option value="">Buscar venta</option>
+    <option value="fecha_actual">Ventas de hoy</option>
+    <option value="fecha_de_la_semana">Ventas de la semana</option>
+    <option value="fecha_mes">Ventas del mes</option>
+  </select>
+  <button class="button" (click)="exportExcel()">Descargar archivo</button>
+</div>
+
 <div class="table-container mt-4">
-  <nz-table class="responsive-table" #ventasDetalle [nzData]="ventasDetalleTmp" [nzShowPagination]="true">      
+  @if(opcionSeleccionada === 'fecha_actual'){
+  <nz-table class="responsive-table" #ventasDetalleDelDia [nzData]="ventasDetalleDelDiaTmp" [nzShowPagination]="true" id="table-data">      
     <thead>
         <tr>      
           <th class="text-center">IdCabecera</th>
           <th class="text-center">Fecha</th>
           <th class="text-center">CodProducto</th>
+          <th class="text-center">Descripcion</th>
           <th class="text-center">Precio</th>
         </tr>
       </thead>
       <tbody class="align-item-center">
-          @for (data of ventasDetalle.data; track $index) {
+          @for (data of ventasDetalleDelDia.data; track $index) {
               <tr>
                 <td class="text-center">{{ data.idcabecera }}</td>                
                 <td class="text-center">{{ data.fecha }}</td>
-                <ng-container>
-                    <td class="text-center">{{ data.codproducto}}</td>
-                </ng-container>
-                
+                <td class="text-center">{{ data.codproducto}}</td>
+                <td class="text-center">{{ data.descripcion}}</td>
                 <td class="text-center">{{'$'}}{{ data.precio }}</td>
               }
       </tbody>
     </nz-table>
+  }@else if(opcionSeleccionada === 'fecha_de_la_semana'){
+    <nz-table class="responsive-table" #ventasDetalleSemana [nzData]="ventasDetalleSemanaTmp" [nzShowPagination]="true" id="table-data">      
+      <thead>
+          <tr>      
+            <th class="text-center">IdCabecera</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">CodProducto</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Precio</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of ventasDetalleSemana.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.idcabecera }}</td>                
+                  <td class="text-center">{{ data.fecha }}</td>
+                  <td class="text-center">{{ data.codproducto}}</td>
+                  <td class="text-center">{{ data.descripcion}}</td>
+                  <td class="text-center">{{'$'}}{{ data.precio }}</td>
+                }
+        </tbody>
+      </nz-table>
+  }@else if(opcionSeleccionada === 'fecha_mes'){
+    <nz-table class="responsive-table" #ventasDetalleMes [nzData]="ventasDetalleMesTmp" [nzShowPagination]="true" id="table-data">      
+      <thead>
+          <tr>      
+            <th class="text-center">IdCabecera</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">CodProducto</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Precio</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of ventasDetalleMes.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.idcabecera }}</td>                
+                  <td class="text-center">{{ data.fecha }}</td>
+                  <td class="text-center">{{ data.codproducto}}</td>
+                  <td class="text-center">{{ data.descripcion}}</td>
+                  <td class="text-center">{{'$'}}{{ data.precio }}</td>
+                }
+        </tbody>
+      </nz-table>
+  }@else{
+    <nz-table class="responsive-table" #ventasDetalle [nzData]="ventasDetalleTmp" [nzShowPagination]="true" id="table-data">      
+      <thead>
+          <tr>      
+            <th class="text-center">IdCabecera</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">CodProducto</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Precio</th>
+          </tr>
+        </thead>
+        <tbody class="align-item-center">
+            @for (data of ventasDetalle.data; track $index) {
+                <tr>
+                  <td class="text-center">{{ data.idcabecera }}</td>                
+                  <td class="text-center">{{ data.fecha }}</td>
+                  <td class="text-center">{{ data.codproducto}}</td>
+                  <td class="text-center">{{ data.descripcion}}</td>
+                  <td class="text-center">{{'$'}}{{ data.precio }}</td>
+                }
+        </tbody>
+      </nz-table>
+  }
   </div>
