@@ -4,7 +4,6 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
-  MinLengthValidator,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';

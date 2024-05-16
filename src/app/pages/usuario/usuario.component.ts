@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.scss'
 })
-export class UsuarioComponent {
+export class UsuarioComponent implements OnInit{
 
   listOfData: IUsuario[] = []
   listOfDataTmp: IUsuario[] = []

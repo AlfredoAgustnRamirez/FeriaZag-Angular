@@ -1,8 +1,15 @@
-import { Component, OnDestroy, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { VentaService } from './services/venta.service';
 import { IVenta } from './interfaces/venta.interface';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -15,13 +22,16 @@ import { AuthService } from '../../core/auth/services/auth.service';
 import { IUsuario } from '../usuario/interfaces/usuario.interface';
 import { Subscription } from 'rxjs';
 import { ProductoService } from '../producto/services/producto.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-venta',
   standalone: true,
   imports: [
     NzInputModule,
+    CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NzButtonModule,
     NzTableModule,
     NzModalModule,
@@ -41,8 +51,9 @@ export class VentaComponent implements OnInit, OnDestroy {
   productosAgregados: IVenta[] = [];
   productosAgregadoss: string[] = [];
   productosEliminados: string[] = [];
-  productosDisponibles: IVenta[] = []
+  productosDisponibles: IVenta[] = [];
   listUsuario: IUsuario[] = [];
+  form!: FormGroup;
   isVisible: boolean = false;
   value: string = '';
   descripcion: string = '';
@@ -53,18 +64,21 @@ export class VentaComponent implements OnInit, OnDestroy {
   codconsignacion?: string = '';
   idcabecera?: string = '';
   codproducto: string = '';
+  productoId: string = ''
   valorinput1: string = '';
   valorinput2: string = '';
   userId: string = '';
   fecha: string = '';
   nuevoEstado: string = '';
+  init: boolean = false;
   private ventaSubscription: Subscription | undefined;
 
   constructor(
     private VentaService: VentaService,
     private AuthService: AuthService,
     private productoServices: ProductoService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private fb: FormBuilder
   ) {
     // Inicializa ventaTmp con tus datos originales (ejemplo)
     this.ventaTmp = [
@@ -74,6 +88,7 @@ export class VentaComponent implements OnInit, OnDestroy {
     // Inicializa venta con los datos originales al inicio
     this.venta = this.ventaTmp;
     // Obtener el ID del usuario al inicializar el componente
+    this.initForm();
   }
 
   ngOnInit() {
@@ -88,6 +103,15 @@ export class VentaComponent implements OnInit, OnDestroy {
     }
   }
 
+  initForm() {
+    this.form = this.fb.group({
+      idproducto: new FormControl(''),
+      codproducto: new FormControl(''),
+      descripcion: new FormControl('', [Validators.required]),
+      precio: new FormControl('', [Validators.required]),
+    });
+  }
+
   getProducto() {
     this.VentaService.getProducto().subscribe((producto: IVenta[]) => {
       this.venta = producto;
@@ -97,7 +121,7 @@ export class VentaComponent implements OnInit, OnDestroy {
 
   agregarProducto(producto: IVenta) {
     this.productosAgregados.push(producto);
-     // Agregar el código del producto a la lista de productos agregados
+    // Agregar el código del producto a la lista de productos agregados
     this.productosAgregadoss.push(producto.codproducto);
     this.actualizarTotalVenta();
     this.limpiarBusqueda();
@@ -120,7 +144,7 @@ export class VentaComponent implements OnInit, OnDestroy {
           0
         )
         .toFixed(2);
-        // Volver a aplicar el filtro de búsqueda
+    // Volver a aplicar el filtro de búsqueda
     this.searchPorCodigo();
   }
 
@@ -145,10 +169,11 @@ export class VentaComponent implements OnInit, OnDestroy {
   }
 
   searchPorCodigo() {
-    this.venta = this.ventaTmp.filter((producto: IVenta) =>
-      producto.codproducto
-        .toLocaleLowerCase()
-        .includes(this.valorinput2.toLocaleLowerCase()) &&
+    this.venta = this.ventaTmp.filter(
+      (producto: IVenta) =>
+        producto.codproducto
+          .toLocaleLowerCase()
+          .includes(this.valorinput2.toLocaleLowerCase()) &&
         !this.productosAgregadoss.includes(producto.codproducto)
     );
   }
@@ -162,11 +187,20 @@ export class VentaComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
+    this.initForm();
     this.isVisible = true;
   }
 
   handleCancel() {
     this.isVisible = false;
+  }
+
+  handleOk() {
+    this.init = true;
+    if (this.form.valid) {
+      this.agregarProducto(this.form.value);
+      this.isVisible = false;
+    }
   }
 
   registrarVenta() {
@@ -195,13 +229,13 @@ export class VentaComponent implements OnInit, OnDestroy {
         });
         this.resetValores();
         this.getProducto();
-        this.actualizarTotalVenta()
+        this.actualizarTotalVenta();
       },
       (error) => {
         this.message.success('Error al registrar la venta:', error);
       }
     );
-  }
+  } 
 
   updateActivo(idProducto: string, nuevoEstado: string) {
     this.productoServices
@@ -212,5 +246,25 @@ export class VentaComponent implements OnInit, OnDestroy {
   resetValores() {
     this.totalVenta = '';
     this.productosAgregados = [];
+  }
+
+  get VentaID() {
+    return this.form.get('idcabecera');
+  }
+
+  get Codproducto() {
+    return this.form.get('codproducto');
+  }
+
+  get ProductoId() {
+    return this.form.get('idproducto');
+  }
+
+  get Descripcion() {
+    return this.form.get('descripcion');
+  }
+
+  get Precio() {
+    return this.form.get('precio');
   }
 }

@@ -42,7 +42,6 @@ export class ProductoComponent implements OnInit{
   productoid: string = ''
   codconsignacion: string = ''
   idconsignacion: string = ''
-  codigo: string = ''
   categoria: string = ''
   talle: string = ''
   precio: string = ''
@@ -51,9 +50,7 @@ export class ProductoComponent implements OnInit{
   codproducto: string = ''
   valorinput1: string = ''
   valorinput2: string = ''
-  estado: string = ''
   opcionSeleccionada: string = '';
-  data: string = ''
 
   constructor(
     private productoServices: ProductoService,

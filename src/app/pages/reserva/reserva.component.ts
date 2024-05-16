@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { VentaService } from '../venta/services/venta.service';
 import { IVenta } from '../venta/interfaces/venta.interface';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -15,7 +14,6 @@ import { AuthService } from '../../core/auth/services/auth.service';
 import { IUsuario } from '../usuario/interfaces/usuario.interface';
 import { Subscription } from 'rxjs';
 import { ProductoService } from '../producto/services/producto.service';
-
 @Component({
   selector: 'app-reserva',
   standalone: true,
@@ -60,7 +58,6 @@ export class ReservaComponent implements OnInit, OnDestroy {
     private VentaService: VentaService,
     private AuthService: AuthService,
     private productoServices: ProductoService,
-    private message: NzMessageService
   ) {
     // Inicializa ventaTmp con tus datos originales (ejemplo)
     this.ventaTmp = [
@@ -158,8 +155,6 @@ export class ReservaComponent implements OnInit, OnDestroy {
   handleCancel() {
     this.isVisible = false;
   }
-
-  
 
   desactivarProducto(idproducto: string){
     this.productoServices.desactivarProducto(idproducto).subscribe(_=>{

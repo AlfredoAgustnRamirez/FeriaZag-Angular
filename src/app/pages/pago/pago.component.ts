@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ProductoconsService } from '../productocons/services/productocons.service';
-import { CategoriaService } from '../categoria/services/categoria.service';
 import { ProductoService } from '../producto/services/producto.service';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { FormBuilder, FormsModule } from '@angular/forms';
@@ -147,7 +145,6 @@ update(){
     this.message.success('Categoria actualizado')
   })
 }
-
 
 reset(){
   this.codconsignacion = ''

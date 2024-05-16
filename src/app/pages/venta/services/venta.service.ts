@@ -32,4 +32,8 @@ export class VentaService {
     return this.http.delete<IVenta>(`${ENDPOINTS.api}venta/desactivar/${idProducto}`)
   }
 
+  registrarVenta2(datosVenta: any) {
+    return this.http.post('/api/register', datosVenta);
+  }
+
 }

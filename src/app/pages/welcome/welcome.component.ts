@@ -12,7 +12,6 @@ export class WelcomeComponent implements OnInit {
   horaActual: string = '';
   fechaActual: string = '';
   userId: string | null = null;
-  nombreUsr: string | null = null;
 
   constructor(private AuthService: AuthService,) {
     this.mostrarFechaHora(); 
